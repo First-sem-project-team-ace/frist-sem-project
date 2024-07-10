@@ -1,2 +1,3 @@
-Image_frame= tk.Frame(app, bg="white", width=500, height=300)
-Image_frame.pack(fill=tk.BOTH,expand=True)
+
+Linear_image_label=customtkinter.CTkLabel(master=frame, image=Linear_image)
+Linear_image_label.place(x=0,y=0)
