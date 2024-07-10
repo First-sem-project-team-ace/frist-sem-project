@@ -37,7 +37,7 @@ def register():
 frame= customtkinter.CTkFrame(master=app, width=screen_width, height=screen_height,bg_color="white",fg_color="#614BD4")
 frame.place(relx=0,rely=0)
 
-Linear_image = customtkinter.CTkImage(light_image=Image.open('Screenshot 2024-07-10 091838.png'),
+Linear_image = customtkinter.CTkImage(light_image=Image.open('Linear.png'),
                                   size=(1366, 770))
 
 Linear_image_label=customtkinter.CTkLabel(master=frame, image=Linear_image)
