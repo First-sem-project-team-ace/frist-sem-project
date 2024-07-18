@@ -3,6 +3,7 @@ import customtkinter
 from PIL import Image
 import Login
 
+
 app = customtkinter.CTk()
 
 customtkinter.set_appearance_mode('light')
@@ -58,18 +59,17 @@ Button_frame.place(relx=0.1, rely=0.4)
 hygiene_btn = customtkinter.CTkButton(master=Button_frame, text="Hygiene", command=hygiene, fg_color="white", bg_color="#FEC8C8", text_color="black", corner_radius=10, width=320, height=45, font=('calibri', 20))
 hygiene_btn.place(x=10, y=9)
 
-comfort_btn = customtkinter.CTkButton(master=Button_frame, text="Comfort", command=comfort, bg_color="gray", fg_color="white", text_color="#614BD4", corner_radius=10, width=320, height=45, font=('calibri', 20))
+Comfort_image = customtkinter.CTkImage(light_image=Image.open('comfort.png'), size=(30, 30))
+Security_image = customtkinter.CTkImage(light_image=Image.open('security.png'), size=(30, 30))
+
+comfort_btn = customtkinter.CTkButton(master=Button_frame, text="Comfort", command=comfort, bg_color="gray", 
+                                      fg_color="white", text_color="#614BD4", corner_radius=10, width=320, 
+                                      height=45, font=('calibri', 20), image=Comfort_image)
 comfort_btn.place(x=340, y=9)
 
-Comfort_image = customtkinter.CTkImage(light_image=Image.open('comfort.png'), size=(30, 30))
-Comfort_image_label = customtkinter.CTkLabel(master=Button_frame, image=Comfort_image, text="")
-Comfort_image_label.place(x=400, y=14)
-
-security_btn = customtkinter.CTkButton(master=Button_frame, text="Security", command=security, bg_color="gray", fg_color="white", text_color="black", corner_radius=10, width=320, height=45, font=('calibri', 20))
+security_btn = customtkinter.CTkButton(master=Button_frame, text="Security", command=security, bg_color="gray",
+                                       fg_color="white", text_color="black", corner_radius=10, width=320, 
+                                       height=45, font=('calibri', 20), image=Security_image)
 security_btn.place(x=670, y=9)
-
-Security_image = customtkinter.CTkImage(light_image=Image.open('security.png'), size=(30, 30))
-Security_image_label = customtkinter.CTkLabel(master=Button_frame, image=Security_image, text="")
-Security_image_label.place(x=750, y=14)
 
 app.mainloop()
