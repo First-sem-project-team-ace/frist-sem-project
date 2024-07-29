@@ -14,6 +14,19 @@ screen_height = Homepage.winfo_screenheight()
 
 current_frame = None
 
+
+    
+    
+
+def logout():
+    Homepage.destroy()
+    import Dashboard
+    
+
+
+    
+    
+
 def show_frame(frame):
     global current_frame
     if current_frame is not None:
@@ -155,13 +168,9 @@ def dashboard():
       oldnew_label.place(relx=0.3,rely=0.65)
    
       Go_room_btn= Ctk.CTkButton(master=Change_frame, text="Go To Room Details", fg_color="dark blue", bg_color="white",
-                                 corner_radius=10, height=50, width=150)
+                                 corner_radius=10, height=50, width=150, command=room)
       Go_room_btn.place(relx=0.65, rely=0.75)
    
-       
-      
-      
-     
       return Change_frame
    
    
@@ -313,13 +322,13 @@ def dashboard():
                                               image=notification_image, fg_color="#EDF1F5", anchor=W)
       Setting_notification_btn.place(relx=0.15, rely=0.5)
    
-      Update_password_btn= Ctk.CTkButton(master=Cont_frame, text="Update password", width=400, height=30, fg_color="#EDF1F5", text_color="black",
+      Update_contact_btn= Ctk.CTkButton(master=Cont_frame, text="Update contact", width=400, height=30, fg_color="#EDF1F5", text_color="black",
                                          anchor=W, image=contact_image)
-      Update_password_btn.place(relx=0.15, rely=0.6)
+      Update_contact_btn.place(relx=0.15, rely=0.6)
    
-      Change_contact_btn= Ctk.CTkButton(master=Cont_frame, text="Change contact", width=400, height=30, fg_color="#EDF1F5", text_color="black",
-                                        anchor=W, image=contact_image)
-      Change_contact_btn.place(relx=0.15, rely=0.7)
+      Logout_btn= Ctk.CTkButton(master=Cont_frame, text="Log out", width=400, height=30, fg_color="#EDF1F5", text_color="black",
+                                        anchor=W, image=logout_image, command=logout)
+      Logout_btn.place(relx=0.15, rely=0.7)
    
    
       return Setting_frame
@@ -410,23 +419,26 @@ def special_req():
 
 def about():
 
-    about= Ctk.CTkToplevel(Homepage)
-    about.geometry("600x400")
-    about.title("About us")
     
-    About_frame= Ctk.CTkFrame(master=about, height=400, width=600, fg_color="#EDF1F5")
-    About_frame.place(relx=0.5, rely=0.15)
+    About_frame= Ctk.CTkFrame(master=Homepage, height=300, width=500, fg_color="#42ABC7")
+    About_frame.place(relx=0.6, rely=0.15)
 
-    About_label=Ctk.CTkLabel(master=About_frame, text="About us")
+    About_label=Ctk.CTkLabel(master=About_frame, text="About us", font=("bold",25), text_color="white")
     About_label.place(relx=0.05, rely=0.15)
 
+    Content_label= Ctk.CTkLabel(master=About_frame, text="Griha hostel offers a welcoming and \ncomfortable living environment for\n students abd professionals.With\n modern amenities and facilities,and a\n supportive community,Griha hostel\n ensures a home-like experience away\n from home.", justify= LEFT,
+                                text_color="white", font=("bold",20))
+    Content_label.place(relx=0.1, rely=0.25)
+
+    def back():
+
+        About_frame.destroy()
+        
+
+    Exit_button= Ctk.CTkButton(master=About_frame, text="X", command=back, width=30)
+    Exit_button.place(relx=0.9, rely=0.05)
+
     
-
-    about.lift()
-    about.focus_set()
-    about.attributes('-topmost', True)
-
-
 
 
 Top_frame= Frame(master=Homepage, width=screen_width, height=100, bg="#3FB5CB", highlightbackground="black", highlightthickness=1,highlightcolor="red")
@@ -446,14 +458,15 @@ dashboard_image = Ctk.CTkImage(light_image=Image.open('images\\dashboard.png'),
                                   size=(20, 20))
 
 Dashboard_btn= Ctk.CTkButton(master=Top_frame, text="Dashboard", text_color="black",font=("bold",15), fg_color="#3FB5CB",
-                             command=dashboard, image=dashboard_image)
+                             command= dashboard, image=dashboard_image)
 Dashboard_btn.place(relx=0.35, rely=0.4)
 
 Room_btn= Ctk.CTkButton(master=Top_frame, text="Rooms", text_color="black", font=("bold",15),fg_color="#3FB5CB",
-                         command= room)
+                         command=room)
 Room_btn.place(relx=0.48, rely=0.4)
 
-Special_req_btn= Ctk.CTkButton(master=Top_frame, text="Special Request", text_color="black", font=("bold",15),fg_color="#3FB5CB",)
+Special_req_btn= Ctk.CTkButton(master=Top_frame, text="Special Request", text_color="black", font=("bold",15),fg_color="#3FB5CB",
+                               command= special_req)
 Special_req_btn.place(relx=0.62, rely=0.4)
 
 # add `from PIL import Image` on top
@@ -484,9 +497,8 @@ Profile_btn= Ctk.CTkButton(master=Top_frame, text="", bg_color="#3FB5CB",fg_colo
                            corner_radius=80, image=profile_image)
 Profile_btn.place(relx=0.9, rely=0.4)
 
-   
-
-
+top_button=[Dashboard_btn,Room_btn,Special_req_btn]
+button_color={btn.cget("text"): False for btn in top_button}
 
 
 dashboard()

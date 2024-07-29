@@ -2,6 +2,7 @@ from tkinter import *
 import customtkinter
 from PIL import Image
 
+
 def login_page():
     login_window = customtkinter.CTk()
     login_window.title("Login")
@@ -11,26 +12,21 @@ def login_page():
     screen_height = login_window.winfo_screenheight()
     login_window.geometry(f"{screen_width}x{screen_height}+0+0")
 
+    def login():
+        login_window.destroy()
+        import Homepage
+   
+        
+
+
     frame = customtkinter.CTkFrame(master=login_window, width=screen_width, height=screen_height, bg_color="white", fg_color="#614BD4")
     frame.place(relx=0, rely=0)
 
-    Linear_image = customtkinter.CTkImage(light_image=Image.open('Linear.png'), size=(1366, 770))
+    Linear_image = customtkinter.CTkImage(light_image=Image.open('images\\Dashboard_label.png'), size=(1366, 770))
     Linear_image_label = customtkinter.CTkLabel(master=frame, image=Linear_image)
     Linear_image_label.place(x=0, y=0)
 
-    Hostel_label = customtkinter.CTkLabel(master=frame, text="Griha Hostel", font=("helvetica", 20, "bold"), text_color="white", fg_color="#6455A6")
-    Hostel_label.place(relx=0.01, rely=0.05)
-
-    Headline_label = customtkinter.CTkLabel(master=frame, text="YOUR HOME AWAY", font=("helvetica", 30, "bold"), bg_color="white", fg_color="#9489C1", text_color="white")
-    Headline_label.place(relx=0.01, rely=0.13)
-
-    Headline_label1 = customtkinter.CTkLabel(master=frame, text="FROM HOME", font=("helvetica", 30, "bold"), bg_color="white", fg_color='#9489C1', text_color="white")
-    Headline_label1.place(relx=0.01, rely=0.17)
-
-    Subheadline_label = customtkinter.CTkLabel(master=frame, text="Experience Comfort In Every Corner", font=("helvetica", 14, "italic"), fg_color="#614BD4", text_color="white")
-    Subheadline_label.place(relx=0.03, rely=0.23)
-
-    my_image = customtkinter.CTkImage(light_image=Image.open('Hostel.jpg'), size=(1366, 400))
+    my_image = customtkinter.CTkImage(light_image=Image.open('images\\Hostel.jpg'), size=(1366, 400))
     my_label = customtkinter.CTkLabel(master=frame, image=my_image)
     my_label.place(relx=0, rely=0.45)
 
@@ -63,8 +59,34 @@ def login_page():
     chk = Checkbutton(master=Login_frame, text="Show password", variable=show_password_var, onvalue=1, offvalue=0, command=show_pass)
     chk.place(relx=0.5, rely=0.5)
 
-    Btn_login = customtkinter.CTkButton(master=Login_frame, text="Login", width=90, fg_color="#614BD4", text_color="white")
+    Btn_login = customtkinter.CTkButton(master=Login_frame, text="Login", width=90, fg_color="#614BD4", 
+                                        command=login,text_color="white")
     Btn_login.place(relx=0.65, rely=0.6)
+
+    def about():
+   
+       
+       About_frame= customtkinter.CTkFrame(master=login_window, height=300, width=500, fg_color="#42ABC7")
+       About_frame.place(relx=0.3, rely=0.2)
+   
+       About_label=customtkinter.CTkLabel(master=About_frame, text="About us", font=("bold",25), text_color="white")
+       About_label.place(relx=0.05, rely=0.15)
+   
+       Content_label= customtkinter.CTkLabel(master=About_frame, text="Griha hostel offers a welcoming and \ncomfortable living environment for\n students abd professionals.With\n modern amenities and facilities,and a\n supportive community,Griha hostel\n ensures a home-like experience away\n from home.", justify= LEFT,
+                                   text_color="white", font=("bold",20))
+       Content_label.place(relx=0.1, rely=0.25)
+
+       def back():
+
+        About_frame.destroy()
+        
+
+       Exit_button= customtkinter.CTkButton(master=About_frame, text="X", command=back, width=30)
+       Exit_button.place(relx=0.9, rely=0.05)   
+
+    What_btn= customtkinter.CTkButton(master=frame,text="?", bg_color="#3FB5CB",fg_color="#3FB5CB",width=50, text_color="black",
+                           corner_radius=80, font=("bold", 20), command=about)
+    What_btn.place(relx=0.7, rely=0.05)
 
     login_window.mainloop()
 
