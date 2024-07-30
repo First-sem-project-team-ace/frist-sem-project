@@ -5,6 +5,7 @@ from datetime import datetime
 
 
 
+
 Homepage= Ctk.CTk()
 
 Ctk.set_appearance_mode('light')
@@ -16,11 +17,18 @@ current_frame = None
 
 
     
+def logout_system():
     
-
-def logout():
     Homepage.destroy()
     import Dashboard
+
+
+def profile():
+    Homepage.destroy()
+    import Profile_update
+    Profile_update.profile()
+
+
     
 
 
@@ -287,6 +295,9 @@ def dashboard():
       return Emergency_frame
    
    def setting():
+      
+      global Cont_frame
+      global Setting_frame
       Setting_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100), fg_color="#EDF1F5")
       Setting_frame.place(relx=0.25, rely=0)
    
@@ -314,24 +325,216 @@ def dashboard():
 
    
    
-      Account_btn= Ctk.CTkButton(master=Cont_frame, text="Account", width=400, height=30,fg_color="#EDF1F5", text_color="black",
-                                 anchor=W, image=account_image)
-      Account_btn.place(relx=0.15, rely=0.4)
+      Profile_btn= Ctk.CTkButton(master=Cont_frame, text="Profile", width=400, height=30,fg_color="#EDF1F5", text_color="black",
+                                 anchor=W, image=account_image, command=profile)
+      Profile_btn.place(relx=0.15, rely=0.4)
    
-      Setting_notification_btn= Ctk.CTkButton(master=Cont_frame, text="Notification", width=400, height=30, text_color="black",
-                                              image=notification_image, fg_color="#EDF1F5", anchor=W)
-      Setting_notification_btn.place(relx=0.15, rely=0.5)
+      Change_passoword_btn= Ctk.CTkButton(master=Cont_frame, text="Change Password", width=400, height=30, text_color="black",
+                                              image=notification_image, fg_color="#EDF1F5", anchor=W, command=change_pass)
+      Change_passoword_btn.place(relx=0.15, rely=0.5)
    
       Update_contact_btn= Ctk.CTkButton(master=Cont_frame, text="Update contact", width=400, height=30, fg_color="#EDF1F5", text_color="black",
-                                         anchor=W, image=contact_image)
+                                         anchor=W, image=contact_image, command=update_contact)
       Update_contact_btn.place(relx=0.15, rely=0.6)
    
       Logout_btn= Ctk.CTkButton(master=Cont_frame, text="Log out", width=400, height=30, fg_color="#EDF1F5", text_color="black",
                                         anchor=W, image=logout_image, command=logout)
       Logout_btn.place(relx=0.15, rely=0.7)
-   
-   
+
       return Setting_frame
+   
+
+   
+
+   def profile():
+        
+        global Cont_frame
+        global Profile_page_frame
+          
+        Profile_page_frame= Ctk.CTkFrame(master=Cont_frame, width=screen_width, height=screen_height, fg_color="#A7DCF5")
+        Profile_page_frame.place(relx=0, rely=0)
+
+        Update_profile_label= Ctk.CTkLabel(master=Profile_page_frame, text="Update Profile", text_color="#CD1818", font=("bold",20))
+        Update_profile_label.place(relx=0.3, rely=0.01)
+
+
+        Name_label= Ctk.CTkLabel(master=Profile_page_frame, text="Name:", text_color="black", font=("bold", 20))
+        Name_label.place(relx=0.05, rely=0.1)
+
+        Email_label= Ctk.CTkLabel(master=Profile_page_frame, text="Email:", text_color="Black",font=("bold",20))
+        Email_label.place(relx=0.05, rely=0.18)
+
+        Guardian_name_label= Ctk.CTkLabel(master=Profile_page_frame, text="Guardian's Name:", text_color="black", font=("bold",20))
+        Guardian_name_label.place(relx=0.05, rely=0.26)
+
+        Contact_no_label= Ctk.CTkLabel(master=Profile_page_frame, text="Contact No:", text_color="Black", font=("bold",20))
+        Contact_no_label.place(relx=0.05, rely=0.34)
+
+        Emergency_contact_label= Ctk.CTkLabel(master=Profile_page_frame, text="Emergency Contact no:", text_color="Black", font=("bold",20))
+        Emergency_contact_label.place(relx=0.05, rely=0.42)
+
+        Name_entry= Ctk.CTkEntry(master=Profile_page_frame, width=350, height=40)
+        Name_entry.place(relx=0.25, rely=0.1)
+
+        Email_entry= Ctk.CTkEntry(master=Profile_page_frame, width=350, height=40)
+        Email_entry.place(relx=0.25, rely=0.18)
+
+        Gurdian_name_entry= Ctk.CTkEntry(master=Profile_page_frame, width=350, height=40)
+        Gurdian_name_entry.place(relx=0.25, rely=0.26)
+
+        Contact_entry= Ctk.CTkEntry(master=Profile_page_frame, width=350, height=40)
+        Contact_entry.place(relx=0.25, rely=0.34)
+
+        Emergency_contact_entry= Ctk.CTkEntry(master=Profile_page_frame, width=350, height=40)
+        Emergency_contact_entry.place(relx=0.25, rely=0.42)
+
+        Submit_btn= Ctk.CTkButton(master=Profile_page_frame, text="Submit", fg_color="#3FB5CB")
+        Submit_btn.place(relx=0.5, rely=0.48)
+
+         # add `from PIL import Image` on top
+        Back_image = Ctk.CTkImage(light_image=Image.open('images\\back.png'),
+                                          size=(30, 30))
+
+        Back_btn= Ctk.CTkButton(master=Profile_page_frame, text="", image=Back_image, fg_color="#A7DCF5", command=profile_back)
+        Back_btn.place(relx=0.01,rely=0.01)
+
+
+        return Profile_page_frame
+   
+   def profile_back():
+       
+       
+       Profile_page_frame.destroy()
+
+   def change_pass():
+       
+       global Cont_frame
+       global change_pass_page_frame
+
+       change_pass_page_frame= Ctk.CTkFrame(master=Cont_frame, width=screen_width, height=screen_height, fg_color="#A7DCF5")
+       change_pass_page_frame.place(relx=0, rely=0)   
+       change_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Change Password", text_color="#CD1818", font=("bold",20))
+       change_pass_label.place(relx=0.3, rely=0.01)   
+       Old_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Old Password:", text_color="black", font=("bold", 20))
+       Old_pass_label.place(relx=0.05, rely=0.1)   
+       new_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="New Password:", text_color="Black",font=("bold",20))
+       new_pass_label.place(relx=0.05, rely=0.18)   
+       confirm_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Confirm New Password:", text_color="black", font=("bold",20))
+       confirm_pass_label.place(relx=0.05, rely=0.26)   
+
+
+       Old_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
+       Old_pass_entry.place(relx=0.25, rely=0.1)   
+       New_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
+       New_pass_entry.place(relx=0.25, rely=0.18)   
+       Confirm_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
+       Confirm_pass_entry.place(relx=0.25, rely=0.26)
+
+       Attempt_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Attempt Securiy Question", text_color="black",
+                                    font=("bold",20))
+       Attempt_label.place(relx=0.2, rely=0.34)
+
+       Favourite_food_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Favourite Food:", font=("bold",20))
+       Favourite_food_label.place(relx=0.13, rely=0.38)
+       First_pet_name_label= Ctk.CTkLabel(master=change_pass_page_frame, text="First pet name:", font=("bold",20))
+       First_pet_name_label.place(relx=0.13, rely=0.42)
+
+       Favourite_food_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=250, height=30)
+       Favourite_food_entry.place(relx=0.25, rely=0.38)
+       First_pet_name_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=250, height=30)
+       First_pet_name_entry.place(relx=0.25,rely=0.42)
+
+       Update_btn= Ctk.CTkButton(master=change_pass_page_frame, text="Update", font=("bold",25), fg_color="#3FB5CB",
+                                 text_color="black")
+       Update_btn.place(relx=0.5, rely=0.45)
+
+       Back_image = Ctk.CTkImage(light_image=Image.open('images\\back.png'),
+                                          size=(30, 30))
+
+       Back_btn= Ctk.CTkButton(master=change_pass_page_frame, text="", image=Back_image, fg_color="#A7DCF5", command=change_pass_back)
+       Back_btn.place(relx=0.01,rely=0.01)
+   
+   def change_pass_back():
+       global change_pass_page_frame
+       
+       change_pass_page_frame.destroy()
+
+   def update_contact():
+       global Cont_frame
+       global update_contact_frame
+
+       update_contact_frame=Ctk.CTkFrame(master=Cont_frame, width=screen_height, height=screen_height, fg_color="#A7DCF5")
+       update_contact_frame.place(relx=0, rely=0)
+
+       update_contact_label= Ctk.CTkLabel(master=update_contact_frame, text="Update contact", text_color="#CD1818", font=("bold",20))
+       update_contact_label.place(relx=0.4, rely=0.01)   
+       Father_contact_label= Ctk.CTkLabel(master=update_contact_frame, text="Father's contact no:", text_color="black", font=("bold", 20))
+       Father_contact_label.place(relx=0.05, rely=0.1)   
+       Mother_contact_label= Ctk.CTkLabel(master=update_contact_frame, text="Mother's contact no:", text_color="Black",font=("bold",20))
+       Mother_contact_label.place(relx=0.05, rely=0.18)  
+
+       Father_contact_entry= Ctk.CTkEntry(master=update_contact_frame, width=350, height=40)
+       Father_contact_entry.place(relx=0.35, rely=0.1)   
+       Mother_contact_entry= Ctk.CTkEntry(master=update_contact_frame, width=350, height=40)
+       Mother_contact_entry.place(relx=0.35, rely=0.18)  
+       
+       Update_btn= Ctk.CTkButton(master=update_contact_frame, text="Update", font=("bold",25), fg_color="#3FB5CB",
+                                 text_color="black")
+       Update_btn.place(relx=0.6, rely=0.3)
+
+       Back_image = Ctk.CTkImage(light_image=Image.open('images\\back.png'),
+                                          size=(30, 30))
+
+       Back_btn= Ctk.CTkButton(master=update_contact_frame, text="", image=Back_image, fg_color="#A7DCF5", command=update_contact_back)
+       Back_btn.place(relx=0.01,rely=0.01)
+
+
+   def update_contact_back():
+       global update_contact_frame
+
+       update_contact_frame.destroy()
+
+   def logout():
+       
+       global Cont_frame
+       global logout_frame
+
+       logout_frame= Ctk.CTkFrame(master=Cont_frame, width=screen_width, height=screen_height, fg_color="#A7DCF5") 
+       logout_frame.place(relx=0, rely=0)
+
+       # add `from PIL import Image` on top
+       Logout_image = Ctk.CTkImage(light_image=Image.open('images\\Tussinajao.png'),
+                                         size=(400, 400))
+       Logout_image_label= Ctk.CTkLabel(master=logout_frame, text="", image=Logout_image)
+       Logout_image_label.place(relx=0, rely=0)
+
+       Logout_label= Ctk.CTkLabel(master=logout_frame, text="Log Out", text_color="#CD1818", font=("bold",25))
+       Logout_label.place(relx=0.4,rely=0.05)
+
+       Question_label= Ctk.CTkLabel(master=logout_frame, text="Are you sure you want to Log Out?",text_color="black",
+                                    font=("bold",20))
+       Question_label.place(relx=0.35, rely=0.17)
+
+       Option_frame= Ctk.CTkFrame(master=logout_frame, width=200, height=40)
+       Option_frame.place(relx=0.38, rely=0.24)
+
+       Logout_btn= Ctk.CTkButton(master=Option_frame, text="Log out", fg_color="#D9D9D9", width=100, height=40,text_color="black",
+                                 command=logout_system)
+       Logout_btn.place(relx=0, rely=0)
+
+       Stay_btn= Ctk.CTkButton(master=Option_frame,text="Stay", fg_color="#3FB5CB", width= 100, height=40, text_color="black",
+                               command=stay)
+       Stay_btn.place(relx=0.5, rely=0)
+
+
+   def stay():
+       global logout_frame
+
+       logout_frame.destroy()
+
+
+
+      
    
    menu()
 
@@ -407,8 +610,6 @@ def room():
                                width=30, height=30, font=("bold", 30))
     normal_room_num.place(relx=0.3, rely=0.4)
 
-
-
     return room_frame
 
 def special_req():
@@ -431,12 +632,15 @@ def about():
     Content_label.place(relx=0.1, rely=0.25)
 
     def back():
+      
 
         About_frame.destroy()
+       
         
 
     Exit_button= Ctk.CTkButton(master=About_frame, text="X", command=back, width=30)
     Exit_button.place(relx=0.9, rely=0.05)
+
 
     
 
