@@ -2,8 +2,9 @@ import customtkinter as Ctk
 from tkinter import *
 from PIL import Image
 from datetime import datetime
-
-
+from tkinter import messagebox
+import sqlite3
+from Login import username
 
 
 Homepage= Ctk.CTk()
@@ -23,18 +24,6 @@ def logout_system():
     import Dashboard
 
 
-def profile():
-    Homepage.destroy()
-    import Profile_update
-    Profile_update.profile()
-
-
-    
-
-
-    
-    
-
 def show_frame(frame):
     global current_frame
     if current_frame is not None:
@@ -51,6 +40,7 @@ button_color={}
 
 def dashboard():
    
+   
    dashboard_frame= Ctk.CTkFrame(master=Homepage, width=screen_width, height=(screen_height-100), fg_color="#EDF1F5")
    dashboard_frame.place(relx=0, rely=0.13)
 
@@ -58,10 +48,20 @@ def dashboard():
    profile_frame= Ctk.CTkFrame(master=Homepage,width=250, height= 130, fg_color="white")
    profile_frame.place(relx=0, rely=0.13)
 
+   profile_label= Ctk.CTkLabel(master=profile_frame, text=username)
+   profile_label.place(relx=0.4, rely=0.4)
+
+   # add `from PIL import Image` on top
+   Profile_account_image = Ctk.CTkImage(light_image=Image.open('images\\profile.png'),
+                                     size=(50, 50))
+
+   profile_image_label= Ctk.CTkLabel(master=profile_frame, text="", image=Profile_account_image)
+   profile_image_label.place(relx=0.1, rely=0.2)
+
    def menu():
     
      global Menu_frame
-     global Change_btn
+     global Change_btn, Change_frame
      global menu_button, button_color
    
      def menu_collapse():
@@ -147,7 +147,7 @@ def dashboard():
       
       global Change_btn
    
-      
+      global Change_frame
       Change_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-250), height=(screen_height-100))
       Change_frame.place(relx=0.2, rely=0)
 
@@ -298,6 +298,7 @@ def dashboard():
       
       global Cont_frame
       global Setting_frame
+      global Search_entry
       Setting_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100), fg_color="#EDF1F5")
       Setting_frame.place(relx=0.25, rely=0)
    
@@ -314,7 +315,13 @@ def dashboard():
       Search_entry= Ctk.CTkEntry(master=Cont_frame, placeholder_text="Search setting", width=300, height=30,text_color="black",fg_color="#EDF1F5")
       Search_entry.place(relx=0.3, rely=0.2)
 
+
+
       # add `from PIL import Image` on top
+
+      # add `from PIL import Image` on top
+      search_image = Ctk.CTkImage(light_image=Image.open('images\\search.png'),
+                                        size=(15, 15))
       contact_image = Ctk.CTkImage(light_image=Image.open('images\\contact.png'),
                                         size=(20, 20))
       
@@ -322,6 +329,10 @@ def dashboard():
                                         size=(20, 20))
       logout_image = Ctk.CTkImage(light_image=Image.open('images\\logout.png'),
                                         size=(20, 20))
+      
+      Search_btn= Ctk.CTkButton(master=Search_entry, image=search_image, text="", fg_color="#EDF1F5", width=100, height=10,
+                                 border_color="light gray", command= search)
+      Search_btn.place(relx=0.7, rely=0.1)
 
    
    
@@ -533,10 +544,37 @@ def dashboard():
        logout_frame.destroy()
 
 
+   def search():
+       
+       global Search_entry
+
+       value = Search_entry.get()
+       
+       if value.lower() in ["profile", "update profile"]:
+           return profile()
+       elif value.lower() in ["password", "change password"]:
+           return change_pass()
+       elif value.lower() in ["contact", "update contact"]:
+           return update_contact()
+       elif value.lower() in ["log out", "logout"]:
+           return logout()
+       else:
+           return messagebox.showinfo("Info", "Invalid Search")
+       
+       
+
+   
+       
+
+       
+       
+
+
 
       
    
    menu()
+   toggle_button("Change Status", change)
 
    return dashboard_frame
    
@@ -614,8 +652,141 @@ def room():
 
 def special_req():
 
-    special_req_frame= Ctk.CTkFrame(master=Homepage, width=screen_height, height=(screen_height-100) )
-    special_req_frame.place(relx=0, rely=0.1)
+    Menu_frame.destroy()
+    current_frame.destroy()
+
+    special_req_frame= Ctk.CTkFrame(master=Homepage, width=screen_width, height=(screen_height-100) )
+    special_req_frame.place(relx=0, rely=0.13)
+
+    #Leave Request Frame
+
+    Leave_frame= Ctk.CTkFrame(master=special_req_frame, width=350, height=300, fg_color="#3FB5CB")
+    Leave_frame.place(relx=0.05, rely=0.01)
+
+    Request_label=Ctk.CTkLabel(master=Leave_frame, text="Request to leave", text_color="White", font=("bold",25))
+    Request_label.place(relx=0.01, rely=0.05)
+
+    Reason_text= Text(master=Leave_frame, width=50, height=5, wrap=WORD, bg="#1AD8E4")
+    Reason_text.place(relx=0, rely=0.18)
+
+    Days_label= Ctk.CTkLabel(master=Leave_frame, text="Days to take leave:", font=("bold",15))
+    Days_label.place(relx=0.05, rely=0.5)
+
+    Days_entry= Ctk.CTkEntry(master=Leave_frame, width=100, height=30, fg_color="#1AD8E4" )
+    Days_entry.place(relx=0.45, rely=0.5)
+
+    Question_label= Ctk.CTkLabel(master=Leave_frame, text="Did you inform your parents?", text_color="black", font=("bold",15))
+    Question_label.place(relx=0.05, rely=0.65)
+
+    Yes_no_var= IntVar()
+
+    Yes_radio_button= Ctk.CTkRadioButton(master=Leave_frame, text="Yes", variable=Yes_no_var,value=1)
+    Yes_radio_button.place(relx=0.65, rely=0.66)
+
+    No_radio_button= Ctk.CTkRadioButton(master=Leave_frame, text="No", variable=Yes_no_var, value=2)
+    No_radio_button.place(relx=0.65, rely=0.75)
+
+    Submit_btn= Ctk.CTkButton(master=Leave_frame, text="Submit", fg_color="#1AD8E4", text_color="black", font=("bold",20))
+    Submit_btn.place(relx=0.3, rely=0.85)
+
+
+     #Meal Preference Frame
+    Meal_frame= Ctk.CTkFrame(master=special_req_frame, width=350, height=300, fg_color="#3FB5CB")
+    Meal_frame.place(relx=0.38, rely=0.01)
+
+    Meal_label=Ctk.CTkLabel(master=Meal_frame, text="Meal Preferences", text_color="White", font=("bold",25))
+    Meal_label.place(relx=0.01, rely=0.05)
+
+    Iam_label= Ctk.CTkLabel(master=Meal_frame, text="I am:", text_color="black", font=("bold",15))
+    Iam_label.place(relx=0.05, rely=0.2)
+
+    Veg_nonveg_var= IntVar()
+
+    Veg_radio_button= Ctk.CTkRadioButton(master=Meal_frame, text="Veg", variable=Veg_nonveg_var,value=1)
+    Veg_radio_button.place(relx=0.25, rely=0.21)
+
+    Non_veg_radio_button= Ctk.CTkRadioButton(master=Meal_frame, text="Non-veg", variable=Veg_nonveg_var, value=2)
+    Non_veg_radio_button.place(relx=0.25, rely=0.3)
+
+    Submit_btn= Ctk.CTkButton(master=Meal_frame, text="Submit", fg_color="#1AD8E4", text_color="black", font=("bold",15))
+    Submit_btn.place(relx=0.4, rely=0.4)
+
+    Egg_paneer_label= Ctk.CTkLabel(master=Meal_frame, text="Egg/Paneer", text_color="black", font=("bold",15))
+    Egg_paneer_label.place(relx=0.05, rely=0.55)
+
+    Egg_paneer_var= IntVar()
+
+    Egg_radio_button= Ctk.CTkRadioButton(master=Meal_frame, text="Egg", variable=Egg_paneer_var,value=1)
+    Egg_radio_button.place(relx=0.3, rely=0.6)
+
+    Paneer_radio_button= Ctk.CTkRadioButton(master=Meal_frame, text="Paneer", variable=Egg_paneer_var, value=2)
+    Paneer_radio_button.place(relx=0.3, rely=0.7)
+
+    Change_preference_btn= Ctk.CTkButton(master=Meal_frame, text="Change", fg_color="#1AD8E4", text_color="black", font=("bold",15))
+    Change_preference_btn.place(relx=0.3, rely=0.8)
+
+    #Event Request Frame
+
+    Event_frame= Ctk.CTkFrame(master=special_req_frame, width=350, height=300, fg_color="#3FB5CB")
+    Event_frame.place(relx=0.7, rely=0.01)
+
+    Event_label=Ctk.CTkLabel(master=Event_frame, text="Event Request", text_color="White", font=("bold",25))
+    Event_label.place(relx=0.01, rely=0.05)
+
+    Catagory_label= Ctk.CTkLabel(master=Event_frame, text="Catagory:", text_color="black", font=("bold",15))
+    Catagory_label.place(relx=0.05, rely=0.2)
+
+    catagory_var= IntVar()
+
+    Education_radio_button= Ctk.CTkRadioButton(master=Event_frame, text="Education", variable=catagory_var,value=1)
+    Education_radio_button.place(relx=0.25, rely=0.21)
+
+    Games_radio_button= Ctk.CTkRadioButton(master=Event_frame, text="Mobile Games", variable=catagory_var, value=2)
+    Games_radio_button.place(relx=0.25, rely=0.3)
+
+    Sports_radio_button= Ctk.CTkRadioButton(master=Event_frame, text="Sports", variable=catagory_var,value=3)
+    Sports_radio_button.place(relx=0.25, rely=0.39)
+
+    Other_radio_button= Ctk.CTkRadioButton(master=Event_frame, text="Others", variable=catagory_var, value=4)
+    Other_radio_button.place(relx=0.25, rely=0.48)
+
+    Title_label= Ctk.CTkLabel(master=Event_frame, text="Specify the title", font=("bold",15))
+    Title_label.place(relx=0.05, rely=0.56)
+
+    Title_text= Text(master=Event_frame, width=50, height=3, wrap=WORD, bg="#1AD8E4")
+    Title_text.place(relx=0, rely=0.65)
+
+    Event_request_btn= Ctk.CTkButton(master=Event_frame, text="Request", fg_color=("#1AD8E4"), text_color="black")
+    Event_request_btn.place(relx=0.35, rely=0.85)
+
+
+    #Maintenace Request Frame
+
+    Maintenance_frame= Ctk.CTkFrame(master=special_req_frame, width=350, height=250, fg_color="#3FB5CB")
+    Maintenance_frame.place(relx=0.05, rely=0.5)
+
+    Miantenance_label=Ctk.CTkLabel(master=Maintenance_frame, text="Maintenacne Request", text_color="White", font=("bold",25))
+    Miantenance_label.place(relx=0.01, rely=0.05)
+
+    Specify_label= Ctk.CTkLabel(master=Maintenance_frame, text="Specify what happened", font=("bold",15))
+    Specify_label.place(relx=0.05, rely=0.2)
+
+    Maintenance_text= Text(master=Maintenance_frame, width=50, height=5, wrap=WORD, bg="#1AD8E4")
+    Maintenance_text.place(relx=0, rely=0.3)
+
+    Maintenance_btn= Ctk.CTkButton(master=Maintenance_frame, text="Submit", fg_color="#1AD8E4", text_color="black")
+    Maintenance_btn.place(relx=0.3, rely=0.7)
+
+
+
+
+
+    
+
+
+
+
+
 
 
 def about():
