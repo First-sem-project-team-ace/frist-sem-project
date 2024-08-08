@@ -873,7 +873,7 @@ def dashboard():
      ownerid_label.place(relx=0.4,rely=0.15)
   
   
-     owner_image=Ctk.CTkImage(light_image=Image.open("Owner_Profile.png"),
+     owner_image=Ctk.CTkImage(light_image=Image.open("images\\Owner_Profile.png"),
                            size=(73, 79) )
      owner_label= Ctk.CTkLabel(master=Menu_frame, image=owner_image,text="" )
      owner_label.place(relx=0.1,rely=0.1)
