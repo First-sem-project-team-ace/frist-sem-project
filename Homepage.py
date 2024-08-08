@@ -4,7 +4,8 @@ from PIL import Image
 from datetime import datetime
 from tkinter import messagebox
 import sqlite3
-from Login import username
+
+# from Login import username
 
 
 Homepage= Ctk.CTk()
@@ -21,7 +22,8 @@ current_frame = None
 def logout_system():
     
     Homepage.destroy()
-    import Dashboard
+    import Login
+    Login.login_page()
 
 
 def show_frame(frame):
@@ -32,7 +34,7 @@ def show_frame(frame):
     current_frame.place(relx=0.2, rely=0.14)
    
 
-global Change_btn
+global Status_btn
 global Menu_frame
 global menu
 menu_button=[]
@@ -48,8 +50,8 @@ def dashboard():
    profile_frame= Ctk.CTkFrame(master=Homepage,width=250, height= 130, fg_color="white")
    profile_frame.place(relx=0, rely=0.13)
 
-   profile_label= Ctk.CTkLabel(master=profile_frame, text=username)
-   profile_label.place(relx=0.4, rely=0.4)
+#    profile_label= Ctk.CTkLabel(master=profile_frame, text=username)
+#    profile_label.place(relx=0.4, rely=0.4)
 
    # add `from PIL import Image` on top
    Profile_account_image = Ctk.CTkImage(light_image=Image.open('images\\profile.png'),
@@ -61,7 +63,7 @@ def dashboard():
    def menu():
     
      global Menu_frame
-     global Change_btn, Change_frame
+     global Status_btn, Change_frame
      global menu_button, button_color
    
      def menu_collapse():
@@ -86,13 +88,15 @@ def dashboard():
                                        size=(30, 30))
      setting_image = Ctk.CTkImage(light_image=Image.open('images\\setting.png'),
                                        size=(30, 30))
-   
+     complaint_image = Ctk.CTkImage(light_image=Image.open('images\\complaint.png'),
+                                       size=(30, 30))
+    
    
      
-     Change_btn= Ctk.CTkButton(master=Menu_frame, width=250, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
-                        text="Change Status", text_color="black", command=lambda: toggle_button("Change Status",change),
+     Status_btn= Ctk.CTkButton(master=Menu_frame, width=250, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
+                        text="Status", text_color="black", command=lambda: toggle_button("Status",status),
                         image=alert_image)
-     Change_btn.place(relx=0, rely=0)
+     Status_btn.place(relx=0, rely=0)
    
      Notice_btn= Ctk.CTkButton(master=Menu_frame, width=250, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
                         text="Notice", text_color="black", command=lambda: toggle_button("Notice",notice), 
@@ -105,7 +109,7 @@ def dashboard():
      Invoice_btn.place(relx=0, rely=0.2)
    
      Complaint_btn= Ctk.CTkButton(master=Menu_frame, width=250, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
-                        text="Complaint", text_color="black", command=lambda: toggle_button("Complaint",complaint))
+                        text="Complaint", text_color="black", command=lambda: toggle_button("Complaint",complaint), image=complaint_image)
      Complaint_btn.place(relx=0, rely=0.3)
    
      Emergency_btn= Ctk.CTkButton(master=Menu_frame, width=250, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
@@ -117,7 +121,7 @@ def dashboard():
                         text="Setting", text_color="black", command=lambda: toggle_button("Setting", setting), image=setting_image)
      Setting_btn.place(relx=0, rely=0.5)
    
-     menu_button=[Change_btn,Notice_btn,Invoice_btn, Complaint_btn,Emergency_btn, Setting_btn]
+     menu_button=[Status_btn,Notice_btn,Invoice_btn, Complaint_btn,Emergency_btn, Setting_btn]
      button_color={btn.cget("text"): False for btn in menu_button}
    
      
@@ -143,37 +147,176 @@ def dashboard():
        show_frame(frame_function())
    
    
-   def change():
+   def status():
       
       global Change_btn
    
       global Change_frame
-      Change_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-250), height=(screen_height-100))
+      Change_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-100), height=(screen_height-100), fg_color="#EDF1F5")
       Change_frame.place(relx=0.2, rely=0)
 
-      ChangeRoom_btn= Ctk.CTkButton(master=Change_frame, text="Change room", width=250, height=100, fg_color="#585454", bg_color="white",
-                                font=("bold",20))
-      ChangeRoom_btn.place(relx=0.15, rely=0.2)
-   
-      swap_btn= Ctk.CTkButton(master=Change_frame, text="Swap Bed", width=250, height=100, fg_color="#585454",  bg_color="white",
-                                font=("bold",20))
-      swap_btn.place(relx=0.55, rely=0.2)
-   
-      Room_upgrade= Ctk.CTkButton(master=Change_frame, text="Room Upgrade", width=250, height=100, fg_color="#585454", bg_color="white", 
-                                font=("bold",20))
-      Room_upgrade.place(relx=0.15, rely=0.4)
-   
-      occupancy_btn= Ctk.CTkButton(master=Change_frame, text="Occupancy Status", width=250, height=100, fg_color="#585454", bg_color="white", 
-                                font=("bold",20))
-      occupancy_btn.place(relx=0.55, rely=0.4)
-   
-      Change_btn.configure(fg_color="gray")
-   
-      # add `from PIL import Image` on top
-      oldnew_image = Ctk.CTkImage(light_image=Image.open('images\\oldnew.png'),
-                                        size=(300, 200))
-      oldnew_label= Ctk.CTkLabel(master=Change_frame, image=oldnew_image,text="" )
-      oldnew_label.place(relx=0.3,rely=0.65)
+      Status_label= Ctk.CTkLabel(master=Change_frame, text="Status", text_color="#1AD8E4", font=("bold",25))
+      Status_label.place(relx=0.01, rely=0.01)
+
+      Subtitle_label= Ctk.CTkLabel(master=Change_frame, text="A quick data overview of the Status.", text_color="#1AD8E4",font=("bold",15))
+      Subtitle_label.place(relx=0.01, rely=0.05)
+
+      # Overall Status Frame
+
+      Overall_status_frame= Ctk.CTkFrame(master=Change_frame, width=240, height=180, fg_color="white", border_color="#01A768", border_width=1)
+      Overall_status_frame.place(relx=0.01, rely=0.1)
+
+      Overall_status_label= Ctk.CTkLabel(master=Overall_status_frame, text="Overall Status", text_color="#1AD8E4", font=("bold",20))
+      Overall_status_label.place(relx=0.25, rely=0.35)
+
+      Good_label= Ctk.CTkLabel(master=Overall_status_frame, text="Good", font=("bold",15), text_color="#1AD8E4")
+      Good_label.place(relx=0.38, rely=0.55)
+
+      Detailed_status_report_btn= Ctk.CTkButton(master=Overall_status_frame, text="View Detailed Report", text_color="#1AD8E4", 
+                                         width=240, height=40, fg_color="#8FEDF3", border_color="#01A768", border_width=1,
+                                         corner_radius=0)
+      Detailed_status_report_btn.place(relx=0, rely=0.78)
+
+      #Joined date frame
+
+      Joined_frame= Ctk.CTkFrame(master=Change_frame, width=240, height=180, fg_color="white", border_color="#FED600", border_width=1)
+      Joined_frame.place(relx=0.23, rely=0.1)
+
+      Joined_date_label= Ctk.CTkLabel(master=Joined_frame, text="Joined Date", text_color="#1AD8E4", font=("bold",20))
+      Joined_date_label.place(relx=0.25, rely=0.35)
+
+      date_label= Ctk.CTkLabel(master=Joined_frame, text="Jan 2024", font=("bold",15), text_color="#1AD8E4")
+      date_label.place(relx=0.3, rely=0.55)
+
+      Detailed_joined_report_btn= Ctk.CTkButton(master=Joined_frame, text="View Detailed Report", text_color="#1AD8E4", 
+                                         width=240, height=40, fg_color="#F3E8AD", border_color="#FED600", border_width=1,
+                                         corner_radius=0)
+      Detailed_joined_report_btn.place(relx=0, rely=0.78)
+
+      # Paid up frame
+
+      Paid_frame= Ctk.CTkFrame(master=Change_frame, width=240, height=180, fg_color="white", border_color="#03A9F5", border_width=1)
+      Paid_frame.place(relx=0.44, rely=0.1)
+
+      Paid_label= Ctk.CTkLabel(master=Paid_frame, text="Paid Up-To", text_color="#1AD8E4", font=("bold",20))
+      Paid_label.place(relx=0.25, rely=0.35)
+
+      Remaining_label= Ctk.CTkLabel(master=Paid_frame, text="3 month remaining", font=("bold",15), text_color="#1AD8E4")
+      Remaining_label.place(relx=0.25, rely=0.55)
+
+      Detailed_Paid_report_btn= Ctk.CTkButton(master=Paid_frame, text="View Detailed Report", text_color="#1AD8E4", 
+                                         width=240, height=40, fg_color="#8FEDF3", border_color="#03A9F5", border_width=1,
+                                         corner_radius=0)
+      Detailed_Paid_report_btn.place(relx=0, rely=0.78)      
+
+
+      #Disciplinary act frame
+      
+      Disciplinary_frame= Ctk.CTkFrame(master=Change_frame, width=240, height=180, fg_color="white", border_color="#F0483E", border_width=1)
+      Disciplinary_frame.place(relx=0.65, rely=0.1)
+
+      Disciplinary_label= Ctk.CTkLabel(master=Disciplinary_frame, text="Discipinary", text_color="#1AD8E4", font=("bold",20))
+      Disciplinary_label.place(relx=0.25, rely=0.35)
+
+      Complaint_found_label= Ctk.CTkLabel(master=Disciplinary_frame, text="Found Complaints", font=("bold",15), text_color="#1AD8E4")
+      Complaint_found_label.place(relx=0.25, rely=0.55)
+
+      Detailed_disciplinary_report_btn= Ctk.CTkButton(master=Disciplinary_frame, text="View Detailed Report", text_color="#1AD8E4", 
+                                         width=240, height=40, fg_color="#ECC3C1", border_color="#F0483E", border_width=1,
+                                         corner_radius=0)
+      Detailed_disciplinary_report_btn.place(relx=0, rely=0.78)
+
+      # Second frame
+
+      Second_frame= Ctk.CTkFrame(master=Change_frame, width=screen_width, height=(screen_height-300), fg_color="white")
+      Second_frame.place(relx=0, rely=0.4)
+
+
+      # Routine Frame
+
+      Routine_frame= Ctk.CTkFrame(master=Second_frame, width=500, height=150, fg_color="white", border_color="#1D242E", border_width=1)
+      Routine_frame.place(relx=0.01, rely=0.01)
+
+      Routine2_frame= Ctk.CTkFrame(master=Routine_frame, width=500, height=50, fg_color="white", border_color="#1D242E", border_width=1,
+                                   corner_radius=0)
+      Routine2_frame.place(relx=0, rely=0)
+
+      Routine_label= Ctk.CTkLabel(master=Routine2_frame, text="Routine", text_color="#1AD8E4", font=("bold", 20))
+      Routine_label.place(relx=0.05, rely=0.3)
+
+      Configuration_btn= Ctk.CTkButton(master=Routine2_frame, text="Go to configuration", text_color="#1AD8E4", font=("bold",15),
+                                       fg_color="white", command=room)
+      Configuration_btn.place(relx=0.55, rely=0.3)
+
+      label4= Ctk.CTkLabel(master=Routine_frame, text="4", font=("bold",35), text_color="#1AD8E4")
+      label4.place(relx=0.1, rely=0.4)
+
+      Special_food_label= Ctk.CTkLabel(master=Routine_frame, text="Special Food Days",text_color="#1AD8E4", font=("bold",15))
+      Special_food_label.place(relx=0.1, rely=0.7)
+
+      label2= Ctk.CTkLabel(master=Routine_frame, text="2", font=("bold",35), text_color="#1AD8E4")
+      label2.place(relx=0.7, rely=0.4)
+
+      Laundry_label= Ctk.CTkLabel(master=Routine_frame, text="Laundry Days", text_color="#1AD8E4", font=("bold", 15))
+      Laundry_label.place(relx=0.7, rely=0.7)
+
+      # Quick report frame
+
+      Quick_report_frame= Ctk.CTkFrame(master=Second_frame, width=500, height=150, fg_color="white", border_color="#1D242E",
+                                       border_width=1)
+
+      Quick_report_frame.place(relx=0.4, rely=0.01)
+
+      Report2_frame= Ctk.CTkFrame(master=Quick_report_frame, width=500, height=50, fg_color="white", border_color="#1D242E", border_width=1,
+                                  corner_radius=0)
+      Report2_frame.place(relx=0, rely=0)
+
+      Reprot_label= Ctk.CTkLabel(master=Report2_frame, text="Quick report", font=("bold",20), text_color="#1AD8E4")
+      Reprot_label.place(relx=0.05,rely=0.3)
+
+
+      Lable0= Ctk.CTkLabel(master=Quick_report_frame, text="0", font=("bold",35), text_color="#1AD8E4")
+      Lable0.place(relx=0.1, rely=0.4)
+
+      NO_disciplinary_label= Ctk.CTkLabel(master=Quick_report_frame, text="No Disciplinary Acts Found", text_color="#1AD8E4", font=("bold",15))
+      NO_disciplinary_label.place(relx=0.1, rely=0.65)
+
+      Month_lable= Ctk.CTkLabel(master=Quick_report_frame, text="8", font=("bold",35), text_color="#1AD8E4")
+      Month_lable.place(relx=0.7, rely= 0.4)
+
+      Staying_label= Ctk.CTkLabel(master=Quick_report_frame, text="Staying from past", text_color="#1AD8E4", font=("bold",15))
+      Staying_label.place(relx=0.7, rely=0.65)
+
+
+      # My room frame
+
+      My_room_frame= Ctk.CTkFrame(master=Change_frame, width=500, height=150, fg_color="white", border_color="#1D242E", border_width=1)
+      My_room_frame.place(relx=0.01, rely=0.65)
+
+      My_room_frame2= Ctk.CTkFrame(master=My_room_frame, width=500, height=50, fg_color="white", border_color="#1D242E", border_width=1,
+                                   corner_radius=0)
+      My_room_frame2.place(relx=0, rely=0)
+
+      My_room_label= Ctk.CTkLabel(master=My_room_frame2, text="My Room", text_color="#1AD8E4", font=("bold",20))
+      My_room_label.place(relx=0.05, rely=0.3)
+
+      My_room_configuration= Ctk.CTkButton(master=My_room_frame2, text="Go To Configuration", text_color="#1AD8E4", font=("bold",15),
+                                           fg_color="white")
+      My_room_configuration.place(relx=0.65, rely=0.3)
+
+      Lable04= Ctk.CTkLabel(master=My_room_frame, text="04", font=("bold",35), text_color="#1AD8E4")
+      Lable04.place(relx=0.1, rely=0.4)
+
+      Total_bed_label= Ctk.CTkLabel(master=My_room_frame, text="Total No Of Beds", text_color="#1AD8E4", font=("bold",15))
+      Total_bed_label.place(relx=0.1, rely=0.65)
+
+      Label204= Ctk.CTkLabel(master=My_room_frame, text="04", text_color="#1AD8E4", font=("bold",35))
+      Label204.place(relx=0.7, rely=0.4)
+      
+      Total_inmates_label= Ctk.CTkLabel(master=My_room_frame, text="Total no of inmates", text_color="#1AD8E4", font=("bold",15))
+      Total_inmates_label.place(relx=0.7, rely=0.65)
+
+
    
       Go_room_btn= Ctk.CTkButton(master=Change_frame, text="Go To Room Details", fg_color="dark blue", bg_color="white",
                                  corner_radius=10, height=50, width=150, command=room)
@@ -213,10 +356,14 @@ def dashboard():
    
        Invoice_label= Ctk.CTkLabel(master=Cont_frame, text="INVOICE:", font=("bold", 25), text_color="black")
        Invoice_label.place(relx=0.05, rely=0.1)
-   
-    #    current_month = datetime.now().strftime("%B")
 
-       Month_amount_label= Ctk.CTkLabel(master=Cont_frame, text="Month\t\t\t\tAmount")
+       first_frame= Ctk.CTkFrame(master=Cont_frame, width=500, height=60, fg_color="#EDF1F5", corner_radius=15, border_color="black", 
+                                 border_width=1)
+       first_frame.place(relx=0.25, rely=0.2)
+   
+
+
+       Month_amount_label= Ctk.CTkLabel(master=first_frame, text="Month\t\t\tAmount", font=("bold",25))
        Month_amount_label.place(relx=0.1, rely=0.2)
 
        Proceed_button= Ctk.CTkButton(master=Cont_frame, text="Proceed to pay", font=("bold", 20), fg_color="#17EBAB")
@@ -561,20 +708,8 @@ def dashboard():
        else:
            return messagebox.showinfo("Info", "Invalid Search")
        
-       
-
-   
-       
-
-       
-       
-
-
-
-      
-   
    menu()
-   toggle_button("Change Status", change)
+   toggle_button("Status", status)
 
    return dashboard_frame
    
@@ -585,70 +720,408 @@ def room():
     Menu_frame.destroy()
     current_frame.destroy()
 
-    room_frame= Ctk.CTkFrame(master=Homepage, width=screen_width, height=(screen_height-100) )
+    room_frame= Ctk.CTkFrame(master=Homepage, width=screen_width, height=(screen_height-100))
     room_frame.place(relx=0, rely=0.13)
-
-   # add `from PIL import Image` on top
-    Background_image = Ctk.CTkImage(light_image=Image.open('images\\Screenshot 2024-07-18 141337.png'),
-                                     size=(screen_width, screen_height))
-   
-    image_label=Ctk.CTkLabel(master=room_frame, image=Background_image, text="")
-    image_label.place(relx=0, rely=0)
 
     # add `from PIL import Image` on top
     Room_image = Ctk.CTkImage(light_image=Image.open('images\\Room_image.png'),
-                                      size=((screen_width-100), 300))
+                                      size=(screen_width, 300))
     
     Room_image_label= Ctk.CTkLabel(master=room_frame, image=Room_image, text="")
     Room_image_label.place(relx=0, rely=0.5)
+
+    Total_room_frame= Ctk.CTkFrame(master=room_frame, width=200, height=70, fg_color="#3FB5CB", corner_radius=15)
+    Total_room_frame.place(relx=0.01, rely=0.1)
+    Total_room_label= Ctk.CTkLabel(master=Total_room_frame, text="Total Rooms \t 50", text_color="white", font=("bold",15))
+    Total_room_label.place(relx=0.1, rely=0.3)
+
+    #Change room button
+
+    Change_room_button= Ctk.CTkButton(master=room_frame, width=200, height=70, text="Change room", text_color="white",
+                                      font=("bold",15), fg_color="#3FB5CB", corner_radius=15, command=change_room)
+    Change_room_button.place(relx=0.25, rely=0.1)
+
   
 
-    Occupied_frame= Ctk.CTkFrame(master=room_frame,width=200, height=70, fg_color="dark blue", corner_radius=15)
+    Occupied_frame= Ctk.CTkFrame(master=room_frame,width=200, height=85, fg_color="#3FB5CB", corner_radius=15)
     Occupied_frame.place(relx=0.01, rely=0.23)
-    Occupied_label= Ctk.CTkLabel(master=Occupied_frame, text="Occupied", text_color="white", font=("bold",15),
+    Occupied_label= Ctk.CTkLabel(master=Occupied_frame, text="Occupied", text_color="yellow", font=("bold",15),
                                  width=30, height=30, corner_radius=0)
     Occupied_label.place(relx=0.3, rely=0.01)
-    Occupied_num= Ctk.CTkLabel(master=Occupied_frame, text="50", text_color="white", fg_color="dark blue",
+    Occupied_num= Ctk.CTkLabel(master=Occupied_frame, text="50", text_color="yellow", fg_color="#3FB5CB",
                                width=30, height=30, font=("bold", 30))
     Occupied_num.place(relx=0.3, rely=0.4)
 
-    vacant_frame= Ctk.CTkFrame(master=room_frame,width=200, height=70, fg_color="dark blue", corner_radius=15)
+    vacant_frame= Ctk.CTkFrame(master=room_frame,width=200, height=85, fg_color="#3FB5CB", corner_radius=15)
     vacant_frame.place(relx=0.2, rely=0.23)
-    vacant_label= Ctk.CTkLabel(master=vacant_frame, text="Vacant", text_color="white", font=("bold",15),
+    vacant_label= Ctk.CTkLabel(master=vacant_frame, text="Vacant", text_color="#FF05C8", font=("bold",15),
                                  width=30, height=30, corner_radius=0)
     vacant_label.place(relx=0.3, rely=0.01)
-    vacant_num= Ctk.CTkLabel(master=vacant_frame, text="15", text_color="white", fg_color="dark blue",
+    vacant_num= Ctk.CTkLabel(master=vacant_frame, text="15", text_color="#FF05C8", fg_color="#3FB5CB",
                                width=30, height=30, font=("bold", 30))
     vacant_num.place(relx=0.3, rely=0.4)
 
-    tenant_frame= Ctk.CTkFrame(master=room_frame,width=200, height=70, fg_color="dark blue", corner_radius=15)
+    tenant_frame= Ctk.CTkFrame(master=room_frame,width=200, height=85, fg_color="#3FB5CB", corner_radius=15)
     tenant_frame.place(relx=0.4, rely=0.23)
     tenant_label= Ctk.CTkLabel(master=tenant_frame, text="Tenant", text_color="white", font=("bold",15),
                                  width=30, height=30, corner_radius=0)
     tenant_label.place(relx=0.3, rely=0.01)
-    tenant_num= Ctk.CTkLabel(master=tenant_frame, text="100", text_color="white", fg_color="dark blue",
+    tenant_num= Ctk.CTkLabel(master=tenant_frame, text="100", text_color="white", fg_color="#3FB5CB",
                                width=30, height=30, font=("bold", 30))
     tenant_num.place(relx=0.3, rely=0.4)
 
-    ac_room_frame= Ctk.CTkFrame(master=room_frame,width=200, height=70, fg_color="dark blue", corner_radius=15)
+    ac_room_frame= Ctk.CTkFrame(master=room_frame,width=200, height=60, fg_color="#3FB5CB", corner_radius=15)
     ac_room_frame.place(relx=0.01, rely=0.4)
     ac_room_label= Ctk.CTkLabel(master=ac_room_frame, text="Ac room", text_color="white", font=("bold",15),
                                  width=30, height=30, corner_radius=0)
     ac_room_label.place(relx=0.3, rely=0.01)
-    ac_room_num= Ctk.CTkLabel(master=ac_room_frame, text="20", text_color="white", fg_color="dark blue",
+    ac_room_num= Ctk.CTkLabel(master=ac_room_frame, text="20", text_color="white", fg_color="#3FB5CB",
                                width=30, height=30, font=("bold", 30))
     ac_room_num.place(relx=0.3, rely=0.4)
 
-    normal_room_frame= Ctk.CTkFrame(master=room_frame,width=200, height=70, fg_color="dark blue", corner_radius=15)
+    normal_room_frame= Ctk.CTkFrame(master=room_frame,width=200, height=60, fg_color="#3FB5CB", corner_radius=15)
     normal_room_frame.place(relx=0.2, rely=0.4)
     normal_room_label= Ctk.CTkLabel(master=normal_room_frame, text="Normal", text_color="white", font=("bold",15),
                                  width=30, height=30, corner_radius=0)
     normal_room_label.place(relx=0.3, rely=0.01)
-    normal_room_num= Ctk.CTkLabel(master=normal_room_frame, text="30", text_color="white", fg_color="dark blue",
+    normal_room_num= Ctk.CTkLabel(master=normal_room_frame, text="30", text_color="white", fg_color="#3FB5CB",
                                width=30, height=30, font=("bold", 30))
     normal_room_num.place(relx=0.3, rely=0.4)
 
+
+    # Furniture frame
+
+    Furniture_frame= Ctk.CTkFrame(master= room_frame, width=350, height=450, fg_color="#555252", corner_radius=5)
+    Furniture_frame.place(relx=0.7, rely=0.1)
+
+    Furniture_label= Ctk.CTkLabel(master=Furniture_frame, text="Furniture", text_color="White", font=("bold",25))
+    Furniture_label.place(relx=0.05, rely=0.03)
+
+    Celing_fan_label= Ctk.CTkLabel(master=Furniture_frame, text="Celing fan \t\t 50", text_color="white",font=("bold",15),
+                                   corner_radius=15, fg_color="#202020")
+    Celing_fan_label.place(relx=0.1, rely=0.1)
+
+    table_label= Ctk.CTkLabel(master=Furniture_frame, text="Table \t\t\t 15", text_color="white",font=("bold",15),
+                                   corner_radius=15, fg_color="#202020")
+    table_label.place(relx=0.1, rely=0.2)
+
+    chairs_label= Ctk.CTkLabel(master=Furniture_frame, text="Chairs \t\t\t 20", text_color="white",font=("bold",15),
+                                   corner_radius=15, fg_color="#202020")
+    chairs_label.place(relx=0.1, rely=0.3)
+
+    bed_label= Ctk.CTkLabel(master=Furniture_frame, text="Beds \t\t\t 50", text_color="white",font=("bold",15),
+                                   corner_radius=15, fg_color="#202020")
+    bed_label.place(relx=0.1, rely=0.4)
+
+    cupboard_label= Ctk.CTkLabel(master=Furniture_frame, text="Cupboard \t\t 30", text_color="white",font=("bold",15),
+                                   corner_radius=15, fg_color="#202020")
+    cupboard_label.place(relx=0.1, rely=0.5)
+
+    tea_table_label= Ctk.CTkLabel(master=Furniture_frame, text="Tea Table \t\t 10", text_color="white",font=("bold",15),
+                                   corner_radius=15, fg_color="#202020")
+    tea_table_label.place(relx=0.1, rely=0.6)
+
+    shoes_rack_label= Ctk.CTkLabel(master=Furniture_frame, text="Shoes Rack \t\t 45", text_color="white",font=("bold",15),
+                                   corner_radius=15, fg_color="#202020")
+    shoes_rack_label.place(relx=0.1, rely=0.7)
+
+    Claim_btn= Ctk.CTkButton(master=Furniture_frame, text="Claim Furniture", text_color="white",font=("bold",15),
+                                   corner_radius=15, fg_color="#3FB5CB", width=100,height=40, command=claim_furniture)
+    Claim_btn.place(relx=0.3, rely=0.8)
+
+   
+
     return room_frame
+
+def change_room():
+       
+       global Floor_entry
+       global Room_entry
+       global Block_entry
+       room_frame= Ctk.CTkFrame(master=Homepage, width=screen_width, height=(screen_height-100) )
+       room_frame.place(relx=0, rely=0.13)
+   
+       # add `from PIL import Image` on top
+       Room_image = Ctk.CTkImage(light_image=Image.open('images\\Room_image.png'),
+                                         size=(screen_width, 300))
+       
+       Room_image_label= Ctk.CTkLabel(master=room_frame, image=Room_image, text="")
+       Room_image_label.place(relx=0, rely=0.5)
+   
+       Total_room_frame= Ctk.CTkFrame(master=room_frame, width=200, height=70, fg_color="#3FB5CB", corner_radius=15)
+       Total_room_frame.place(relx=0.01, rely=0.1)
+       Total_room_label= Ctk.CTkLabel(master=Total_room_frame, text="Total Rooms \t 50", text_color="white", font=("bold",15))
+       Total_room_label.place(relx=0.1, rely=0.3)
+     
+   
+       Occupied_frame= Ctk.CTkFrame(master=room_frame,width=200, height=85, fg_color="#3FB5CB", corner_radius=15)
+       Occupied_frame.place(relx=0.01, rely=0.23)
+       Occupied_label= Ctk.CTkLabel(master=Occupied_frame, text="Occupied", text_color="yellow", font=("bold",15),
+                                    width=30, height=30, corner_radius=0)
+       Occupied_label.place(relx=0.3, rely=0.01)
+       Occupied_num= Ctk.CTkLabel(master=Occupied_frame, text="50", text_color="yellow", fg_color="#3FB5CB",
+                                  width=30, height=30, font=("bold", 30))
+       Occupied_num.place(relx=0.3, rely=0.4)
+   
+       ac_room_frame= Ctk.CTkFrame(master=room_frame,width=200, height=60, fg_color="#3FB5CB", corner_radius=15)
+       ac_room_frame.place(relx=0.01, rely=0.4)
+       ac_room_label= Ctk.CTkLabel(master=ac_room_frame, text="Ac room", text_color="white", font=("bold",15),
+                                    width=30, height=30, corner_radius=0)
+       ac_room_label.place(relx=0.3, rely=0.01)
+       ac_room_num= Ctk.CTkLabel(master=ac_room_frame, text="20", text_color="white", fg_color="#3FB5CB",
+                                  width=30, height=30, font=("bold", 30))
+       ac_room_num.place(relx=0.3, rely=0.4)
+
+
+       change_room_frame= Ctk.CTkFrame(master=room_frame, width=600, height=250, fg_color="#3FB5CB", corner_radius=10)
+       change_room_frame.place(relx=0.2, rely=0.1)
+
+       Change_room_label=Ctk.CTkLabel(master=change_room_frame, text="Change Room", text_color="white", font=("bold",25))
+       Change_room_label.place(relx=0.3, rely=0.1)
+
+       Change_to_label=Ctk.CTkLabel(master=change_room_frame, text="Change To:", text_color=("White"), font=('bold',20))
+       Change_to_label.place(relx=0.3, rely=0.3)
+
+       Block_label= Ctk.CTkLabel(master=change_room_frame, text="Block:",text_color="White", font=("bold",20))
+       Block_label.place(relx=0.25, rely=0.45)
+
+       Floor_label= Ctk.CTkLabel(master=change_room_frame, text="Floor:",text_color="White", font=("bold",20))
+       Floor_label.place(relx=0.25, rely=0.6)
+
+       Room_label= Ctk.CTkLabel(master=change_room_frame, text="Room no:",text_color="White", font=("bold",20))
+       Room_label.place(relx=0.25, rely=0.75)
+
+       Block_entry= Ctk.CTkEntry(master=change_room_frame, text_color="black", width=50)
+       Block_entry.place(relx=0.4, rely=0.45)
+
+       Floor_entry= Ctk.CTkEntry(master=change_room_frame,text_color="black", width=50)
+       Floor_entry.place(relx=0.4, rely=0.6)
+
+       Room_entry= Ctk.CTkEntry(master=change_room_frame,text_color="black", width=50)
+       Room_entry.place(relx=0.4, rely=0.75)
+
+       Request_btn= Ctk.CTkButton(master=change_room_frame, text="Request to change", width=100, height=40, corner_radius=10,
+                                  fg_color="#1AD8E4", text_color="black", command=change_room_request)
+       Request_btn.place(relx=0.5, rely=0.8)
+
+
+       # Furniture frame
+   
+       Furniture_frame= Ctk.CTkFrame(master= room_frame, width=350, height=450, fg_color="#555252", corner_radius=5)
+       Furniture_frame.place(relx=0.7, rely=0.1)
+   
+       Furniture_label= Ctk.CTkLabel(master=Furniture_frame, text="Furniture", text_color="White", font=("bold",25))
+       Furniture_label.place(relx=0.05, rely=0.03)
+   
+       Celing_fan_label= Ctk.CTkLabel(master=Furniture_frame, text="Celing fan \t\t 50", text_color="white",font=("bold",15),
+                                      corner_radius=15, fg_color="#202020")
+       Celing_fan_label.place(relx=0.1, rely=0.1)
+   
+       table_label= Ctk.CTkLabel(master=Furniture_frame, text="Table \t\t\t 15", text_color="white",font=("bold",15),
+                                      corner_radius=15, fg_color="#202020")
+       table_label.place(relx=0.1, rely=0.2)
+   
+       chairs_label= Ctk.CTkLabel(master=Furniture_frame, text="Chairs \t\t\t 20", text_color="white",font=("bold",15),
+                                      corner_radius=15, fg_color="#202020")
+       chairs_label.place(relx=0.1, rely=0.3)
+   
+       bed_label= Ctk.CTkLabel(master=Furniture_frame, text="Beds \t\t\t 50", text_color="white",font=("bold",15),
+                                      corner_radius=15, fg_color="#202020")
+       bed_label.place(relx=0.1, rely=0.4)
+   
+       cupboard_label= Ctk.CTkLabel(master=Furniture_frame, text="Cupboard \t\t 30", text_color="white",font=("bold",15),
+                                      corner_radius=15, fg_color="#202020")
+       cupboard_label.place(relx=0.1, rely=0.5)
+   
+       tea_table_label= Ctk.CTkLabel(master=Furniture_frame, text="Tea Table \t\t 10", text_color="white",font=("bold",15),
+                                      corner_radius=15, fg_color="#202020")
+       tea_table_label.place(relx=0.1, rely=0.6)
+   
+       shoes_rack_label= Ctk.CTkLabel(master=Furniture_frame, text="Shoes Rack \t\t 45", text_color="white",font=("bold",15),
+                                      corner_radius=15, fg_color="#202020")
+       shoes_rack_label.place(relx=0.1, rely=0.7)
+   
+       Claim_btn= Ctk.CTkButton(master=Furniture_frame, text="Claim Furniture", text_color="white",font=("bold",15),
+                                      corner_radius=15, fg_color="#3FB5CB", width=100,height=40, command=claim_furniture)
+       Claim_btn.place(relx=0.3, rely=0.8)
+
+def change_room_request():
+ if Block_entry.get()=="":
+    messagebox.showinfo("Entry","Please fill the block no")
+ elif Floor_entry.get()=="":
+    messagebox.showinfo("Entry","Please fill the floor")
+ elif Room_entry.get()=="":
+     messagebox.showinfo("Entry","Please fill the Room no")
+ else:
+      messagebox.showinfo("Success","Your Request has been sent")
+      room()
+
+def claim_furniture():
+
+    global Celing_fan_entry
+    global chairs_entry
+    global table_entry
+    global bed_entry
+    global shoes_rack_entry
+    global tea_table_entry
+    global cupboard_entry
+
+    room_frame= Ctk.CTkFrame(master=Homepage, width=screen_width, height=(screen_height-100) )
+    room_frame.place(relx=0, rely=0.13)
+
+    # add `from PIL import Image` on top
+    Room_image = Ctk.CTkImage(light_image=Image.open('images\\Room_image.png'),
+                                      size=(screen_width, 300))
+    
+    Room_image_label= Ctk.CTkLabel(master=room_frame, image=Room_image, text="")
+    Room_image_label.place(relx=0, rely=0.5)
+
+    Total_room_frame= Ctk.CTkFrame(master=room_frame, width=200, height=70, fg_color="#3FB5CB", corner_radius=15)
+    Total_room_frame.place(relx=0.01, rely=0.1)
+    Total_room_label= Ctk.CTkLabel(master=Total_room_frame, text="Total Rooms \t 50", text_color="white", font=("bold",15))
+    Total_room_label.place(relx=0.1, rely=0.3)
+
+    #Change room button
+
+    Change_room_button= Ctk.CTkButton(master=room_frame, width=200, height=70, text="Change room", text_color="white",
+                                      font=("bold",15), fg_color="#3FB5CB", corner_radius=15, command=change_room)
+    Change_room_button.place(relx=0.25, rely=0.1)
+
+  
+
+    Occupied_frame= Ctk.CTkFrame(master=room_frame,width=200, height=85, fg_color="#3FB5CB", corner_radius=15)
+    Occupied_frame.place(relx=0.01, rely=0.23)
+    Occupied_label= Ctk.CTkLabel(master=Occupied_frame, text="Occupied", text_color="yellow", font=("bold",15),
+                                 width=30, height=30, corner_radius=0)
+    Occupied_label.place(relx=0.3, rely=0.01)
+    Occupied_num= Ctk.CTkLabel(master=Occupied_frame, text="50", text_color="yellow", fg_color="#3FB5CB",
+                               width=30, height=30, font=("bold", 30))
+    Occupied_num.place(relx=0.3, rely=0.4)
+
+    vacant_frame= Ctk.CTkFrame(master=room_frame,width=200, height=85, fg_color="#3FB5CB", corner_radius=15)
+    vacant_frame.place(relx=0.2, rely=0.23)
+    vacant_label= Ctk.CTkLabel(master=vacant_frame, text="Vacant", text_color="#FF05C8", font=("bold",15),
+                                 width=30, height=30, corner_radius=0)
+    vacant_label.place(relx=0.3, rely=0.01)
+    vacant_num= Ctk.CTkLabel(master=vacant_frame, text="15", text_color="#FF05C8", fg_color="#3FB5CB",
+                               width=30, height=30, font=("bold", 30))
+    vacant_num.place(relx=0.3, rely=0.4)
+
+    tenant_frame= Ctk.CTkFrame(master=room_frame,width=200, height=85, fg_color="#3FB5CB", corner_radius=15)
+    tenant_frame.place(relx=0.4, rely=0.23)
+    tenant_label= Ctk.CTkLabel(master=tenant_frame, text="Tenant", text_color="white", font=("bold",15),
+                                 width=30, height=30, corner_radius=0)
+    tenant_label.place(relx=0.3, rely=0.01)
+    tenant_num= Ctk.CTkLabel(master=tenant_frame, text="100", text_color="white", fg_color="#3FB5CB",
+                               width=30, height=30, font=("bold", 30))
+    tenant_num.place(relx=0.3, rely=0.4)
+
+    ac_room_frame= Ctk.CTkFrame(master=room_frame,width=200, height=60, fg_color="#3FB5CB", corner_radius=15)
+    ac_room_frame.place(relx=0.01, rely=0.4)
+    ac_room_label= Ctk.CTkLabel(master=ac_room_frame, text="Ac room", text_color="white", font=("bold",15),
+                                 width=30, height=30, corner_radius=0)
+    ac_room_label.place(relx=0.3, rely=0.01)
+    ac_room_num= Ctk.CTkLabel(master=ac_room_frame, text="20", text_color="white", fg_color="#3FB5CB",
+                               width=30, height=30, font=("bold", 30))
+    ac_room_num.place(relx=0.3, rely=0.4)
+
+    normal_room_frame= Ctk.CTkFrame(master=room_frame,width=200, height=60, fg_color="#3FB5CB", corner_radius=15)
+    normal_room_frame.place(relx=0.2, rely=0.4)
+    normal_room_label= Ctk.CTkLabel(master=normal_room_frame, text="Normal", text_color="white", font=("bold",15),
+                                 width=30, height=30, corner_radius=0)
+    normal_room_label.place(relx=0.3, rely=0.01)
+    normal_room_num= Ctk.CTkLabel(master=normal_room_frame, text="30", text_color="white", fg_color="#3FB5CB",
+                               width=30, height=30, font=("bold", 30))
+    normal_room_num.place(relx=0.3, rely=0.4)
+
+
+    claim_furniture_frame= Ctk.CTkFrame(master=room_frame, width=400, height=300, fg_color="#3FB5CB", corner_radius=10)
+    claim_furniture_frame.place(relx=0.68, rely=0.1)
+
+    claim_furniture_label= Ctk.CTkLabel(master=claim_furniture_frame, text="Claim Furniture", text_color="White", font=("bold",25))
+    claim_furniture_label.place(relx=0.3, rely=0.05)
+
+    Celing_fan_label= Ctk.CTkLabel(master=claim_furniture_frame, text="Celing fan", text_color="white",font=("bold",15),
+                                   corner_radius=15)
+    Celing_fan_label.place(relx=0.1, rely=0.15)
+
+    table_label= Ctk.CTkLabel(master=claim_furniture_frame, text="Table", text_color="white",font=("bold",15),
+                                   corner_radius=15)
+    table_label.place(relx=0.1, rely=0.25)
+
+    chairs_label= Ctk.CTkLabel(master=claim_furniture_frame, text="Chairs", text_color="white",font=("bold",15),
+                                   corner_radius=15)
+    chairs_label.place(relx=0.1, rely=0.35)
+
+    bed_label= Ctk.CTkLabel(master=claim_furniture_frame, text="Beds", text_color="white",font=("bold",15),
+                                   corner_radius=15)
+    bed_label.place(relx=0.1, rely=0.45)
+
+    cupboard_label= Ctk.CTkLabel(master=claim_furniture_frame, text="Cupboard", text_color="white",font=("bold",15),
+                                   corner_radius=15)
+    cupboard_label.place(relx=0.1, rely=0.55)
+
+    tea_table_label= Ctk.CTkLabel(master=claim_furniture_frame, text="Tea Table", text_color="white",font=("bold",15),
+                                   corner_radius=15)
+    tea_table_label.place(relx=0.1, rely=0.65)
+
+    shoes_rack_label= Ctk.CTkLabel(master=claim_furniture_frame, text="Shoes Rack", text_color="white",font=("bold",15),
+                                   corner_radius=15)
+    shoes_rack_label.place(relx=0.1, rely=0.75)
+
+
+    Celing_fan_entry= Ctk.CTkEntry(master=claim_furniture_frame,font=("bold",15), width=80, placeholder_text="Qnt", fg_color="#D9D9D9",
+                                   corner_radius=15)
+    Celing_fan_entry.place(relx=0.5, rely=0.15)
+
+    table_entry= Ctk.CTkEntry(master=claim_furniture_frame,font=("bold",15), width=80, placeholder_text="Qnt", fg_color="#D9D9D9",
+                                   corner_radius=15)
+    table_entry.place(relx=0.5, rely=0.25)
+
+    chairs_entry= Ctk.CTkEntry(master=claim_furniture_frame,font=("bold",15), width=80, placeholder_text="Qnt", fg_color="#D9D9D9",
+                                   corner_radius=15)
+    chairs_entry.place(relx=0.5, rely=0.35)
+
+    bed_entry= Ctk.CTkEntry(master=claim_furniture_frame, font=("bold",15), width=80, placeholder_text="Qnt", fg_color="#D9D9D9",
+                                   corner_radius=15)
+    bed_entry.place(relx=0.5, rely=0.45)
+
+    cupboard_entry= Ctk.CTkEntry(master=claim_furniture_frame, font=("bold",15), width=80, placeholder_text="Qnt", fg_color="#D9D9D9",
+                                   corner_radius=15)
+    cupboard_entry.place(relx=0.5, rely=0.55)
+
+    tea_table_entry= Ctk.CTkEntry(master=claim_furniture_frame, font=("bold",15), width=80, placeholder_text="Qnt", fg_color="#D9D9D9",
+                                   corner_radius=15)
+    tea_table_entry.place(relx=0.5, rely=0.65)
+
+    shoes_rack_entry= Ctk.CTkEntry(master=claim_furniture_frame,font=("bold",15), width=80, placeholder_text="Qnt", fg_color="#D9D9D9",
+                                   corner_radius=15)
+    shoes_rack_entry.place(relx=0.5, rely=0.75)
+
+    request_btn= Ctk.CTkButton(master=claim_furniture_frame, text="Request", text_color="black", fg_color="#1AD8E4",width=100, height=40,
+                               command= claim_furniture_request)
+    request_btn.place(relx=0.75, rely=0.5)
+
+def claim_furniture_request():
+
+    if Celing_fan_entry.get()=="":
+        messagebox.showinfo("Info","Please fill the ceiling fan quantity")
+    elif table_entry.get()=="":
+         messagebox.showinfo("Info","Please fill the table quantity")
+    elif chairs_entry.get()=="":
+         messagebox.showinfo("Info","Please fill the chairs quantity")
+    elif bed_entry.get()=="":
+         messagebox.showinfo("Info","Please fill the bed quantity")    
+    elif cupboard_entry.get()=="":
+         messagebox.showinfo("Info","Please fill the cupboard quantity")
+    elif tea_table_entry.get()=="":
+         messagebox.showinfo("Info","Please fill the tea table quantity")
+    elif shoes_rack_entry.get()=="":
+         messagebox.showinfo("Info","Please fill the shoe rack quantity")
+
+    else:
+        messagebox.showinfo("Success", "Your request has been sent")
+        room()
 
 def special_req():
 
@@ -765,8 +1238,8 @@ def special_req():
     Maintenance_frame= Ctk.CTkFrame(master=special_req_frame, width=350, height=250, fg_color="#3FB5CB")
     Maintenance_frame.place(relx=0.05, rely=0.5)
 
-    Miantenance_label=Ctk.CTkLabel(master=Maintenance_frame, text="Maintenacne Request", text_color="White", font=("bold",25))
-    Miantenance_label.place(relx=0.01, rely=0.05)
+    Mainntenance_label=Ctk.CTkLabel(master=Maintenance_frame, text="Maintenacne Request", text_color="White", font=("bold",25))
+    Mainntenance_label.place(relx=0.01, rely=0.05)
 
     Specify_label= Ctk.CTkLabel(master=Maintenance_frame, text="Specify what happened", font=("bold",15))
     Specify_label.place(relx=0.05, rely=0.2)
@@ -777,43 +1250,115 @@ def special_req():
     Maintenance_btn= Ctk.CTkButton(master=Maintenance_frame, text="Submit", fg_color="#1AD8E4", text_color="black")
     Maintenance_btn.place(relx=0.3, rely=0.7)
 
+def popup(frame_name):
+
+    global pop_up_frame
+    pop_up_frame= Ctk.CTkFrame(master=Homepage, height=320, width=500, fg_color="#42ABC7", corner_radius=15, bg_color="#D9D9D9")
+    pop_up_frame.place(relx=0.6, rely=0.15)
 
 
+    if frame_name== "notification":
+        notification()
+    elif frame_name=="about":
+        about()
+
+    elif frame_name=="profile":
+        profile()
+
+    return pop_up_frame
 
 
-    
-
-
-
-
-
+#About frame
 
 
 def about():
-
     
-    About_frame= Ctk.CTkFrame(master=Homepage, height=300, width=500, fg_color="#42ABC7")
-    About_frame.place(relx=0.6, rely=0.15)
+
+    About_frame= Ctk.CTkFrame(master=pop_up_frame, height=320, width=500, fg_color="#42ABC7", corner_radius=15, bg_color="white")
+    About_frame.place(relx=0, rely=0)
+
 
     About_label=Ctk.CTkLabel(master=About_frame, text="About us", font=("bold",25), text_color="white")
     About_label.place(relx=0.05, rely=0.15)
+
 
     Content_label= Ctk.CTkLabel(master=About_frame, text="Griha hostel offers a welcoming and \ncomfortable living environment for\n students abd professionals.With\n modern amenities and facilities,and a\n supportive community,Griha hostel\n ensures a home-like experience away\n from home.", justify= LEFT,
                                 text_color="white", font=("bold",20))
     Content_label.place(relx=0.1, rely=0.25)
 
-    def back():
-      
-
-        About_frame.destroy()
-       
-        
-
     Exit_button= Ctk.CTkButton(master=About_frame, text="X", command=back, width=30)
     Exit_button.place(relx=0.9, rely=0.05)
 
 
+def notification():
+
+    Notification_frame= Ctk.CTkFrame(master=pop_up_frame, height=300, width=500, fg_color="#42ABC7", corner_radius=15, bg_color="white")
+    Notification_frame.place(relx=0, rely=0)
+
+
+    Notification_label= Ctk.CTkLabel(master=Notification_frame, text="Notification", font=("bold",20), text_color="light gray")
+    Notification_label.place(relx=0.05, rely=0.05)
+
+    #first frame
+
+    first_notice_frame= Ctk.CTkFrame(master=Notification_frame, width=500, height=60, fg_color="#BDA4A4",border_color="light gray",
+                                     border_width=1, corner_radius=0)
+    first_notice_frame.place(relx=0, rely=0.2)
+    first_notice_lable= Ctk.CTkLabel(master=first_notice_frame, text=("Notice has been added by admin to the system, please check."),
+                                     font=("bold",15), text_color="black", image=profile_image, compound=LEFT)
+    first_notice_lable.place(relx=0.05, rely=0.2)
+
+  # second frame
+
+    second_notice_frame= Ctk.CTkFrame(master=Notification_frame, width=500, height=60, fg_color="#BDA4A4",border_color="light gray",
+                                     border_width=1, corner_radius=0)
+    second_notice_frame.place(relx=0, rely=0.4)
+    second_notice_lable= Ctk.CTkLabel(master=second_notice_frame, text=("The meal Routine has been changed by admin."),
+                                     font=("bold",15), text_color="black", image=profile_image, compound=LEFT)
+    second_notice_lable.place(relx=0.05, rely=0.2)
+
+# third frame
+
+    third_notice_frame= Ctk.CTkFrame(master=Notification_frame, width=500, height=60, fg_color="#BDA4A4",border_color="light gray",
+                                     border_width=1, corner_radius=0)
+    third_notice_frame.place(relx=0, rely=0.6)
+    third_notice_lable= Ctk.CTkLabel(master=third_notice_frame, text=("Furniture has been added to the hostel.Please claim."),
+                                     font=("bold",15), text_color="black", image=profile_image, compound=LEFT)
+    third_notice_lable.place(relx=0.05, rely=0.2)
+
+#fourth frame
+
+    fourth_notice_frame= Ctk.CTkFrame(master=Notification_frame, width=500, height=60, fg_color="#BDA4A4",border_color="light gray",
+                                     border_width=1, corner_radius=0)
+    fourth_notice_frame.place(relx=0, rely=0.8)
+    fourth_notice_lable= Ctk.CTkLabel(master=fourth_notice_frame, text=("Your ID has been varified successfully."),
+                                     font=("bold",15), text_color="black", image=profile_image, compound=LEFT)
+    fourth_notice_lable.place(relx=0.05, rely=0.2)
+
+    def back():
+     
+        pop_up_frame.destroy()
+
+
+    Exit_button= Ctk.CTkButton(master=Notification_frame, text="X", command=back, width=30)
+    Exit_button.place(relx=0.9, rely=0.05)
+
+    #profile frame
+
+def profile():
+
+    # Name_label= Ctk.CTkLabel(pop_up_frame, text=username, font=("bold",20),text_color="whtie")
+    # Name_label.place(relx=0.2, rely=0.15)
+    Exit_button= Ctk.CTkButton(master=pop_up_frame, text="X", command=back, width=30)
+    Exit_button.place(relx=0.9, rely=0.05)
+
+def back():
+     
+    pop_up_frame.destroy()
+
     
+
+
 
 
 Top_frame= Frame(master=Homepage, width=screen_width, height=100, bg="#3FB5CB", highlightbackground="black", highlightthickness=1,highlightcolor="red")
@@ -857,7 +1402,7 @@ profile_image = Ctk.CTkImage(light_image=Image.open('images\\profile.png'),
                                   size=(20, 20))
 
 Notification_btn= Ctk.CTkButton(master=Top_frame, text="",fg_color="#3FB5CB", bg_color="#3FB5CB", corner_radius=80, 
-                                width=40, image=notification_image)
+                                width=40, image=notification_image, command= lambda: popup("notification"))
 Notification_btn.place(relx=0.75, rely=0.4)
 
 Calender_btn= Ctk.CTkButton(master=Top_frame, text="", bg_color="#3FB5CB",fg_color="#3FB5CB", 
@@ -865,11 +1410,11 @@ Calender_btn= Ctk.CTkButton(master=Top_frame, text="", bg_color="#3FB5CB",fg_col
 Calender_btn.place(relx=0.8, rely=0.4)
 
 What_btn= Ctk.CTkButton(master=Top_frame,text="?", bg_color="#3FB5CB",fg_color="#3FB5CB",width=50, text_color="black",
-                        corner_radius=80, font=("bold", 20), command=about)
+                        corner_radius=80, font=("bold", 20), command=lambda:popup("about"))
 What_btn.place(relx=0.85, rely=0.4)
 
 Profile_btn= Ctk.CTkButton(master=Top_frame, text="", bg_color="#3FB5CB",fg_color="#3FB5CB", width=40,
-                           corner_radius=80, image=profile_image)
+                           corner_radius=80, image=profile_image, command=lambda:popup("profile"))
 Profile_btn.place(relx=0.9, rely=0.4)
 
 top_button=[Dashboard_btn,Room_btn,Special_req_btn]

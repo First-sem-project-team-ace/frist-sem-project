@@ -70,6 +70,7 @@ def sign_up():
       conn.close()
   
       login()
+
   
 
 
@@ -83,6 +84,7 @@ Registerpage.configure(bg_color="white")
 def login():
   Registerpage.destroy()
   import Login
+  Login.login_page()
 
 
 

@@ -12,19 +12,63 @@ screen_width = app.winfo_screenwidth()
 screen_height = app.winfo_screenheight()
 
 def hygiene():
-    print("Hygiene button pressed")
+    global hygiene_frame
+
+    hygiene_btn.configure(fg_color="#9CD9E4")
+    hygiene_frame= customtkinter.CTkFrame(master=app, width=320, height=200, fg_color="#9CD9E4")
+    hygiene_frame.place(relx=0.11, rely=0.46)
+
+    back_btn=customtkinter.CTkButton(master=hygiene_frame, text="X", width=20, height=10 ,command=hygiene_back)
+    back_btn.place(relx=0.9, rely=0.02)
+
+    hygiene_label=customtkinter.CTkLabel(master=hygiene_frame, text="At Griha Hostel, we prioritize the health and well-\n being of our residents by maintaining the highest \n standards of hygiene throughout our facilities.\n We believe that a clean and sanitary environment \n is essential for the comfort and safety of our\n guests. Our comprehensive hygiene practices are\n designed to provide a welcoming and healthy\n living space for everyone.",
+                                         font=("bold",14), text_color="black", justify=LEFT)
+    hygiene_label.place(relx=0 ,rely=0.14)
+
+def hygiene_back():
+        hygiene_frame.destroy()
 
 def comfort():
-    print("Comfort button pressed")
+    global comfort_frame
+
+    comfort_btn.configure(fg_color="#9CD9E4")
+    comfort_frame= customtkinter.CTkFrame(master=app, width=320, height=200, fg_color="#9CD9E4")
+    comfort_frame.place(relx=0.35, rely=0.46)
+
+    back_btn=customtkinter.CTkButton(master=comfort_frame, text="X", width=20, height=10 ,command=comfort_back)
+    back_btn.place(relx=0.9, rely=0.02)
+
+    hygiene_label=customtkinter.CTkLabel(master=comfort_frame, text="At Griha Hostel, we are dedicated to providing a \n comfortable and cozy environment for all our \n residents. Our aim is to create a home away \n from home where everyone feels relaxed and at \n ease. From well-furnished rooms to thoughtfully \n  designed common areas, every aspect of our \n  hostel is geared towards ensuring maximum \ncomfort and convenience for our guests.",
+                                         font=("bold",14), text_color="black", justify=LEFT)
+    hygiene_label.place(relx=0 ,rely=0.14)
+
+def comfort_back():
+        comfort_frame.destroy()
 
 def security():
-    print("Security button pressed")
+    global security_frame
+
+    security_btn.configure(fg_color="#9CD9E4")
+    security_frame= customtkinter.CTkFrame(master=app, width=320, height=200, fg_color="#9CD9E4")
+    security_frame.place(relx=0.59, rely=0.46)
+
+    back_btn=customtkinter.CTkButton(master=security_frame, text="X", width=20, height=10 ,command=security_back)
+    back_btn.place(relx=0.9, rely=0.02)
+
+    hygiene_label=customtkinter.CTkLabel(master=security_frame, text="At Griha Hostel, the safety and security of our \n residents is our top priority. We have \nimplemented comprehensive security measures \nto create a safe living environment where\n everyone can feel protected and secure. From \nadvanced surveillance systems to strict access \ncontrols, every aspect of our security \ninfrastructure is designed to provide peace of \nmind to our guests.",
+                                         font=("bold",14), text_color="black", justify=LEFT)
+    hygiene_label.place(relx=0 ,rely=0.14)
+
+def security_back():
+        security_frame.destroy()
+
+
 
 def login():
     app.destroy()  # Destroy the main application window
     import Login
     Login.login_page()
-
+    
 def register():
     app.destroy()
     import Register
@@ -69,7 +113,6 @@ security_btn = customtkinter.CTkButton(master=Button_frame, text="Security", com
                                        height=45, font=('calibri', 20), image=Security_image)
 security_btn.place(x=670, y=9)
 
-
 def about():
 
     
@@ -79,7 +122,7 @@ def about():
     About_label=customtkinter.CTkLabel(master=About_frame, text="About us", font=("bold",25), text_color="white")
     About_label.place(relx=0.05, rely=0.15)
 
-    Content_label= customtkinter.CTkLabel(master=About_frame, text="Griha hostel offers a welcoming and \ncomfortable living environment for\n students abd professionals.With\n modern amenities and facilities,and a\n supportive community,Griha hostel\n ensures a home-like experience away\n from home.", justify= LEFT,
+    Content_label= customtkinter.CTkLabel(master=About_frame, text="Griha hostel offers a welcoming and \n comfortable living environment for\n students abd professionals.With\n modern amenities and facilities,and a\n supportive community,Griha hostel\n ensures a home-like experience away\n from home.", justify= LEFT,
                                 text_color="white", font=("bold",20))
     Content_label.place(relx=0.1, rely=0.25)
 

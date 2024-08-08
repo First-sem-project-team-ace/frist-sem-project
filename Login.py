@@ -5,11 +5,10 @@ import sqlite3
 from tkinter import messagebox
 
 
-
 def login_page():
-
-   login_window = customtkinter.CTk()
+   login_window= customtkinter.CTk()
    login_window.title("Login")
+
    customtkinter.set_appearance_mode('light')
    screen_width = login_window.winfo_screenwidth()
    screen_height = login_window.winfo_screenheight()
@@ -45,9 +44,7 @@ def login_page():
        
        conn.close()
    
-   
-   
-       
+      
    frame = customtkinter.CTkFrame(master=login_window, width=screen_width, height=screen_height, bg_color="white", fg_color="#614BD4")
    frame.place(relx=0, rely=0)
    Linear_image = customtkinter.CTkImage(light_image=Image.open('images\\Dashboard_label.png'), size=(1366, 770))
