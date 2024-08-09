@@ -1277,58 +1277,58 @@ def dashboard():
 
         return Profile_page_frame
    
-   def profile_back():
+#    def profile_back():
        
        
-       Profile_page_frame.destroy()
+#        Profile_page_frame.destroy()
 
-   def change_pass():
+#    def change_pass():
        
-       global Cont_frame
-       global change_pass_page_frame
+#        global Cont_frame
+#        global change_pass_page_frame
 
-       change_pass_page_frame= Ctk.CTkFrame(master=Cont_frame, width=screen_width, height=screen_height, fg_color="#A7DCF5")
-       change_pass_page_frame.place(relx=0, rely=0)   
-       change_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Change Password", text_color="#CD1818", font=("bold",20))
-       change_pass_label.place(relx=0.3, rely=0.01)   
-       Old_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Old Password:", text_color="black", font=("bold", 20))
-       Old_pass_label.place(relx=0.05, rely=0.1)   
-       new_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="New Password:", text_color="Black",font=("bold",20))
-       new_pass_label.place(relx=0.05, rely=0.18)   
-       confirm_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Confirm New Password:", text_color="black", font=("bold",20))
-       confirm_pass_label.place(relx=0.05, rely=0.26)   
+#        change_pass_page_frame= Ctk.CTkFrame(master=Cont_frame, width=screen_width, height=screen_height, fg_color="#A7DCF5")
+#        change_pass_page_frame.place(relx=0, rely=0)   
+#        change_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Change Password", text_color="#CD1818", font=("bold",20))
+#        change_pass_label.place(relx=0.3, rely=0.01)   
+#        Old_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Old Password:", text_color="black", font=("bold", 20))
+#        Old_pass_label.place(relx=0.05, rely=0.1)   
+#        new_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="New Password:", text_color="Black",font=("bold",20))
+#        new_pass_label.place(relx=0.05, rely=0.18)   
+#        confirm_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Confirm New Password:", text_color="black", font=("bold",20))
+#        confirm_pass_label.place(relx=0.05, rely=0.26)   
 
 
-       Old_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
-       Old_pass_entry.place(relx=0.25, rely=0.1)   
-       New_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
-       New_pass_entry.place(relx=0.25, rely=0.18)   
-       Confirm_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
-       Confirm_pass_entry.place(relx=0.25, rely=0.26)
+#        Old_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
+#        Old_pass_entry.place(relx=0.25, rely=0.1)   
+#        New_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
+#        New_pass_entry.place(relx=0.25, rely=0.18)   
+#        Confirm_pass_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=350, height=40)
+#        Confirm_pass_entry.place(relx=0.25, rely=0.26)
 
-       Attempt_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Attempt Securiy Question", text_color="black",
-                                    font=("bold",20))
-       Attempt_label.place(relx=0.2, rely=0.34)
+#        Attempt_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Attempt Securiy Question", text_color="black",
+#                                     font=("bold",20))
+#        Attempt_label.place(relx=0.2, rely=0.34)
 
-       Favourite_food_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Favourite Food:", font=("bold",20))
-       Favourite_food_label.place(relx=0.13, rely=0.38)
-       First_pet_name_label= Ctk.CTkLabel(master=change_pass_page_frame, text="First pet name:", font=("bold",20))
-       First_pet_name_label.place(relx=0.13, rely=0.42)
+#        Favourite_food_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Favourite Food:", font=("bold",20))
+#        Favourite_food_label.place(relx=0.13, rely=0.38)
+#        First_pet_name_label= Ctk.CTkLabel(master=change_pass_page_frame, text="First pet name:", font=("bold",20))
+#        First_pet_name_label.place(relx=0.13, rely=0.42)
 
-       Favourite_food_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=250, height=30)
-       Favourite_food_entry.place(relx=0.25, rely=0.38)
-       First_pet_name_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=250, height=30)
-       First_pet_name_entry.place(relx=0.25,rely=0.42)
+#        Favourite_food_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=250, height=30)
+#        Favourite_food_entry.place(relx=0.25, rely=0.38)
+#        First_pet_name_entry= Ctk.CTkEntry(master=change_pass_page_frame, width=250, height=30)
+#        First_pet_name_entry.place(relx=0.25,rely=0.42)
 
-       Update_btn= Ctk.CTkButton(master=change_pass_page_frame, text="Update", font=("bold",25), fg_color="#3FB5CB",
-                                 text_color="black")
-       Update_btn.place(relx=0.5, rely=0.45)
+#        Update_btn= Ctk.CTkButton(master=change_pass_page_frame, text="Update", font=("bold",25), fg_color="#3FB5CB",
+#                                  text_color="black")
+#        Update_btn.place(relx=0.5, rely=0.45)
 
-       Back_image = Ctk.CTkImage(light_image=Image.open('images\\back.png'),
-                                          size=(30, 30))
+#        Back_image = Ctk.CTkImage(light_image=Image.open('images\\back.png'),
+#                                           size=(30, 30))
 
-       Back_btn= Ctk.CTkButton(master=change_pass_page_frame, text="", image=Back_image, fg_color="#A7DCF5", command=change_pass_back)
-       Back_btn.place(relx=0.01,rely=0.01)
+#        Back_btn= Ctk.CTkButton(master=change_pass_page_frame, text="", image=Back_image, fg_color="#A7DCF5", command=change_pass_back)
+#        Back_btn.place(relx=0.01,rely=0.01)
    
    def change_pass_back():
        global change_pass_page_frame
