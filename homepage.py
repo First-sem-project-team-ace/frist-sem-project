@@ -1742,7 +1742,7 @@ def claim_furniture():
     #Change room button
 
     Change_room_button= Ctk.CTkButton(master=room_frame, width=200, height=70, text="Change room", text_color="white",
-                                      font=("bold",15), fg_color="#3FB5CB", corner_radius=15, command=change_room)
+                                      font=("bold",15), fg_color="#3FB5CB", corner_radius=15, command=add_room)
     Change_room_button.place(relx=0.25, rely=0.1)
 
   
