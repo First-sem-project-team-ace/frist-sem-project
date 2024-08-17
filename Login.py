@@ -1,6 +1,9 @@
-# from tkinter import *
-# import customtkinter
-# from PIL import Image
+from tkinter import *
+import customtkinter
+from PIL import Image
+from tkinter import messagebox
+
+import sqlite3
 
 # def login_page():
 #     login_window = customtkinter.CTk()
@@ -59,9 +62,6 @@
 # if __name__ == "__main__":
 #     login_page()
 
-from tkinter import *
-import customtkinter
-from PIL import Image
 
 
 def login_page():
@@ -72,12 +72,39 @@ def login_page():
     screen_width = login_window.winfo_screenwidth()
     screen_height = login_window.winfo_screenheight()
     login_window.geometry(f"{screen_width}x{screen_height}+0+0")
-
     def login():
-        login_window.destroy()
-        import homepage
-   
-        
+        global username
+        conn = sqlite3.connect("hostel.db")
+        c = conn.cursor()
+    
+        username = username_entry.get()
+        password = password_entry.get()
+    
+        if not username or not password:
+            messagebox.showerror("Error", "Please fill in both username and password")
+            return
+        c.execute("SELECT password FROM hostel WHERE username=?", (username,))
+        result = c.fetchone()
+            
+        if username == "ram" and password == "1":
+           login_window.destroy()
+           import homepage
+    
+
+        elif result:
+            stored_password = result[0]
+            if stored_password == password:
+                login_window.destroy()
+    
+                shared_state=username
+                import student_homepage
+            else:
+                messagebox.showerror("Error", "Invalid password")
+        else:
+            messagebox.showerror("Error", "Invalid username")
+    
+        conn.close()
+                
 
 
     frame = customtkinter.CTkFrame(master=login_window, width=screen_width, height=screen_height, bg_color="white", fg_color="#614BD4")
@@ -103,15 +130,15 @@ def login_page():
     Login_label = Label(master=Login_frame, text="Log In", font=("bold", 25), bg="white", fg="#614BD4")
     Login_label.place(relx=0.1, rely=0.1)
 
-    email_label = Label(master=Login_frame, text="Email:", bg="white", fg="black", font=("20"))
-    email_label.place(relx=0.03, rely=0.3)
+    username_label = Label(master=Login_frame, text="Username:", bg="white", fg="black", font=("20"))
+    username_label.place(relx=0.03, rely=0.3)
     password_label = Label(master=Login_frame, text="Password:", bg="white", fg="Black", font=("20"))
     password_label.place(relx=0.03, rely=0.4)
-
-    email_entry = customtkinter.CTkEntry(master=Login_frame, width=200, fg_color="gray", text_color="white", corner_radius=10, bg_color="white")
-    email_entry.place(relx=0.3, rely=0.3)
+    username_entry = customtkinter.CTkEntry(master=Login_frame, width=200, fg_color="gray", text_color="white", corner_radius=10, bg_color="white")
+    username_entry.place(relx=0.3, rely=0.3)
     password_entry = customtkinter.CTkEntry(master=Login_frame, width=200, fg_color="gray", text_color="white", corner_radius=10, bg_color="white", show="*")
     password_entry.place(relx=0.3, rely=0.4)
+
 
     def show_pass():
         if show_password_var.get() == 1:
@@ -154,7 +181,6 @@ def login_page():
 
     login_window.mainloop()
 
-if __name__ == "__main__":
-    login_page()
+
 
 
