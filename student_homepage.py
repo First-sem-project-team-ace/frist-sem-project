@@ -17,6 +17,9 @@ screen_height = Homepage.winfo_screenheight()
 
 current_frame = None
 
+conn= sqlite3.connect("hostel.db")
+c=conn.cursor()
+
 
     
 def logout_system():
@@ -326,10 +329,15 @@ def dashboard():
    
    
    def notice():
-      Notice_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100), fg_color="#EDF1F5", corner_radius=20)
+
+
+
+      Notice_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100),
+                                 fg_color="#EDF1F5", corner_radius=20)
       Notice_frame.place(relx=0.25, rely=0)
    
-      Cont_frame= Ctk.CTkFrame(master=Notice_frame, width=(screen_width-500), height=(400), fg_color="#A7DCF5", corner_radius=10, bg_color="white")
+      Cont_frame= Ctk.CTkFrame(master=Notice_frame, width=(screen_width-500), height=(400),
+                               fg_color="#A7DCF5", corner_radius=10, bg_color="white")
       Cont_frame.place(relx=0.1, rely=0.2)
    
       Feature_label= Ctk.CTkLabel(master=Notice_frame, text="Feature: We offer our honerable student to change their status such as room, bed,\noccupancy and so on", 
@@ -338,6 +346,21 @@ def dashboard():
    
       Notice_label= Ctk.CTkLabel(master=Cont_frame, text="Notices:", text_color="black", font=("bold",25))
       Notice_label.place(relx=0.02, rely=0.05)
+
+      def display_notices():
+          c.execute("SELECT * FROM update_notice")
+          data = c.fetchall()
+          
+          x = 0.15
+          y = 0.1
+          for i, row in enumerate(data):
+              label = Ctk.CTkLabel(master=Cont_frame, text=row[0], width=500, height=40, fg_color="#1AD8E4")  
+              label.place(relx=x, rely=y)    
+              y += 0.15  # increment y for each label
+      
+      display_notices()
+      
+
       return Notice_frame
    
    
@@ -377,8 +400,7 @@ def dashboard():
        global Complaint_text
        global Subject_entry
 
-       conn= sqlite3.connect("hostel.db")
-       c= conn.cursor()
+
        c.execute("""CREATE TABLE IF NOT EXISTS complaint(
                  
                  subject TEXT,
@@ -422,15 +444,14 @@ def dashboard():
    
    def get_Complaint():
        
-       conn= sqlite3.connect("hostel.db")
-       c= conn.cursor()
+
        c.execute(" INSERT INTO complaint(subject,complaint) VALUES(?,?)",
                  (Subject_entry.get(), Complaint_text.get("1.0","end-1c")))
        
        messagebox.showinfo("Info","Your Complaint has been successfully submitted")
 
        conn.commit()
-       conn.close()
+       
 
        Subject_entry.delete(0,END)
        Complaint_text.delete("1.0","end-1c")
@@ -441,50 +462,47 @@ def dashboard():
    
    def emergency():
       
-      conn= sqlite3.connect("hostel.db")
-      c= conn.cursor()
-      c.execute("SELECT father_contact, mother_contact FROM profile WHERE username=?",(username,))
-      result= c.fetchone()
-      conn.close()
+
+       c.execute("SELECT father_contact, mother_contact FROM profile WHERE username=?", (username,))
+       result = c.fetchone()
       
-
-      if result:
-          global father_number,mother_number
-          father_number,mother_number=result
-      Emergency_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-250), height=(screen_height-100), fg_color="#EDF1F5")
-      Emergency_frame.place(relx=0.25, rely=0)
-   
-   
-      Feature_label= Ctk.CTkLabel(master=Emergency_frame, text="Feature: We offer our honerable student to change their status such as room, bed,\noccupancy and so on", 
-                                  justify= LEFT,text_color="black", font=("bold",25))
-      Feature_label.place (relx=0, rely=0.05)
-
-      
-      Cont_frame= Ctk.CTkFrame(master=Emergency_frame, width=(screen_width-500), height=(400), fg_color="#A7DCF5", corner_radius=10, bg_color="white")
-      Cont_frame.place(relx=0.1, rely=0.2)
-
-      Contact_label= Ctk.CTkLabel(master=Cont_frame, text="Contacts:", font=("bold", 25), text_color="black")
-      Contact_label.place(relx=0.05, rely=0.05)
-
-      Header_label= Ctk.CTkLabel(master=Cont_frame, text="Relation \t\t\t\t Number", text_color="black", font=("bold", 25))
-      Header_label.place(relx=0.18, rely=0.25)
-
-      Father_contact= Ctk.CTkLabel(master=Cont_frame, text="Father \t\t\t\t +977-{}".format(father_number),font=("bold", 20))
-      Father_contact.place(relx=0.2, rely=0.4)
-      
-      Mother_contact= Ctk.CTkLabel(master=Cont_frame, text="Mother \t\t\t\t +977-{}".format(mother_number),font=("bold", 20))
-      Mother_contact.place(relx=0.2, rely=0.55)
-
-      Police_contace= Ctk.CTkLabel(master=Cont_frame, text="Police \t\t\t\t 100",font=("bold", 20))
-      Police_contace.place(relx=0.2, rely=0.7)
-      
-      Warden_contact= Ctk.CTkLabel(master=Cont_frame, text="Warden \t\t\t\t +977-984561287",font=("bold", 20))
-      Warden_contact.place(relx=0.2, rely=0.85)
-      
-
-   
-      return Emergency_frame
-   
+       
+       father_number = mother_number = "No contact"
+       
+       if result:
+           father_number, mother_number = result
+       
+       Emergency_frame = Ctk.CTkFrame(master=Homepage, width=(screen_width-250), height=(screen_height-100), fg_color="#EDF1F5")
+       Emergency_frame.place(relx=0.25, rely=0)
+       
+       Feature_label = Ctk.CTkLabel(master=Emergency_frame, text="Feature: We offer our honerable student to change their status such as room, bed,\noccupancy and so on", 
+                                    justify=LEFT, text_color="black", font=("bold", 25))
+       Feature_label.place(relx=0, rely=0.05)
+       
+       Cont_frame = Ctk.CTkFrame(master=Emergency_frame, width=(screen_width-500), height=(400), fg_color="#A7DCF5", corner_radius=10, bg_color="white")
+       Cont_frame.place(relx=0.1, rely=0.2)
+       
+       Contact_label = Ctk.CTkLabel(master=Cont_frame, text="Contacts:", font=("bold", 25), text_color="black")
+       Contact_label.place(relx=0.05, rely=0.05)
+       
+       Header_label = Ctk.CTkLabel(master=Cont_frame, text="Relation \t\t\t\t Number", text_color="black", font=("bold", 25))
+       Header_label.place(relx=0.18, rely=0.25)
+       
+       Father_contact = Ctk.CTkLabel(master=Cont_frame, text="Father \t\t\t\t +977-{}".format(father_number), font=("bold", 20))
+       Father_contact.place(relx=0.2, rely=0.4)
+       
+       Mother_contact = Ctk.CTkLabel(master=Cont_frame, text="Mother \t\t\t\t +977-{}".format(mother_number), font=("bold", 20))
+       Mother_contact.place(relx=0.2, rely=0.55)
+       
+       Police_contace = Ctk.CTkLabel(master=Cont_frame, text="Police \t\t\t\t 100", font=("bold", 20))
+       Police_contace.place(relx=0.2, rely=0.7)
+       
+       Warden_contact = Ctk.CTkLabel(master=Cont_frame, text="Warden \t\t\t\t +977-984561287", font=("bold", 20))
+       Warden_contact.place(relx=0.2, rely=0.85)
+       
+          
+       return Emergency_frame
+          
    def setting():
 
       
@@ -550,8 +568,7 @@ def dashboard():
    
 
    def profile():
-    conn = sqlite3.connect("hostel.db")
-    c = conn.cursor()
+
     c.execute("""CREATE TABLE IF NOT EXISTS profile(
                 name TEXT,
                 email TEXT,
@@ -564,7 +581,7 @@ def dashboard():
               
                 )""")
     conn.commit()
-    conn.close()
+    
 
     global Cont_frame
     global Profile_page_frame
@@ -617,9 +634,6 @@ def dashboard():
     Back_btn = Ctk.CTkButton(master=Profile_page_frame, text="", image=Back_image, fg_color="#A7DCF5", command=profile_back)
     Back_btn.place(relx=0.01, rely=0.01)
 
-    # Check if the profile is empty
-    conn = sqlite3.connect("hostel.db")
-    c = conn.cursor()
     c.execute("SELECT * FROM profile WHERE username=?", (username,))
     row = c.fetchone()
     if row is None:
@@ -627,14 +641,13 @@ def dashboard():
         c.execute("INSERT INTO profile (name, email, gurdian, contact, emergency_contact, username) VALUES (?, ?, ?, ?, ?, ?)",
                   (Name_entry.get(), Email_entry.get(), Gurdian_name_entry.get(), Contact_entry.get(), Emergency_contact_entry.get(), username))
         conn.commit()
-    conn.close()
+    
 
     return Profile_page_frame
 
 
    def update_add():
-     conn = sqlite3.connect("hostel.db")
-     c = conn.cursor()
+
      c.execute(
         """UPDATE profile SET
         name= :Uname,
@@ -653,7 +666,7 @@ def dashboard():
         },
     )
      conn.commit()
-     conn.close()
+    
      messagebox.showinfo("Info", "Your profile has been updated successfully")
 
        
@@ -718,8 +731,7 @@ def dashboard():
        Back_btn.place(relx=0.01,rely=0.01)
    
    def update_password():
-    conn = sqlite3.connect("hostel.db")
-    c = conn.cursor()
+
     
     # Get the old password from the database
     c.execute("SELECT password FROM hostel WHERE username=?", (username,))
@@ -732,7 +744,7 @@ def dashboard():
             # Update the password
             c.execute("UPDATE hostel SET password=? WHERE username=?", (New_pass_entry.get(), username))
             conn.commit()
-            conn.close()
+           
             messagebox.showinfo("Info", "Password updated successfully")
             Old_pass_entry.delete(0,END)
             New_pass_entry.delete(0,END)
@@ -783,10 +795,7 @@ def dashboard():
        Back_btn= Ctk.CTkButton(master=update_contact_frame, text="", image=Back_image, fg_color="#A7DCF5", command=update_contact_back)
        Back_btn.place(relx=0.01,rely=0.01)
 
-   
-       
-       conn = sqlite3.connect("hostel.db")
-       c = conn.cursor()
+
        c.execute("SELECT * FROM profile WHERE username=?", (username,))
        row = c.fetchone()
        if row is None:
@@ -794,7 +803,7 @@ def dashboard():
            c.execute("INSERT INTO profile (father_contact,mother_contact) VALUES (?, ?)",
                      (Father_contact_entry.get(),Mother_contact_entry.get()))
            conn.commit()
-       conn.close()
+       
 
    def contact_update():
        
@@ -812,8 +821,9 @@ def dashboard():
         },
     )
      conn.commit()
-     conn.close()
+     
      messagebox.showinfo("Info", "Your contact info has been updated successfully")
+   
        
 
 
@@ -915,7 +925,7 @@ def database():
         """, (50, 50, 50, 50, 50, 50, 50, 50))
 
     conn.commit()
-    conn.close()
+   
     
 
 def get_furniture_counts():
@@ -923,12 +933,11 @@ def get_furniture_counts():
     c = conn.cursor()
     c.execute("SELECT fan, [table], chair, bed, teatable, shoerack, cupboard FROM furniture")
     counts = c.fetchone()
-    conn.close()
+   
     return counts
 
 
 def room():
-    
 
     global fan, table, chair, bed, teatable, shoerack, cupboard 
     fan, table, chair, bed, teatable, shoerack, cupboard = get_furniture_counts()
@@ -940,8 +949,6 @@ def room():
     global cupboard_label
     global tea_table_label
     global shoes_rack_label
-
-    
 
     database()
 
@@ -977,7 +984,7 @@ def room():
     c.execute("SELECT fan, [table],chair,bed,teatable,shoerack,cupboard FROM furniture")
     quant=c.fetchone()
     conn.commit()
-    conn.close()
+   
 
     fan,table,chair,bed,teatable,shoerack,cupboard=quant
 
@@ -1146,7 +1153,7 @@ def change_room():
                  room_no TEXT,
                  username TEXT)""")
        conn.commit()
-       conn.close()
+      
        
        global Floor_entry
        global Room_entry
@@ -1269,6 +1276,15 @@ def change_room_request():
  elif Room_entry.get()=="":
      messagebox.showinfo("Entry","Please fill the Room no")
  else:
+      
+    # Get the requested quantities from the user
+    fan = int(Celing_fan_entry.get())
+    table = int(table_entry.get())
+    chair = int(chairs_entry.get())
+    bed = int(bed_entry.get())
+    teatable = int(tea_table_entry.get())
+    shoerack = int(shoes_rack_entry.get())
+    cupboard = int(cupboard_entry.get())
 
     # Connect to the database
     conn = sqlite3.connect("hostel.db")
@@ -1286,7 +1302,7 @@ def change_room_request():
 
     # Commit the changes and close the connection
     conn.commit()
-    conn.close()
+   
 
     # Clear the entry fields
     Celing_fan_entry.delete(0, END)
@@ -1325,7 +1341,7 @@ def claim_furniture():
               )""")
     
     conn.commit()
-    conn.close()
+   
 
     room_frame= Ctk.CTkFrame(master=Homepage, width=screen_width, height=(screen_height-100) )
     room_frame.place(relx=0, rely=0.13)
@@ -1527,7 +1543,7 @@ def claim_furniture_request():
 
         # Commit the changes and close the connection
         conn.commit()
-        conn.close()
+       
 
         # Clear the entry fields
         Celing_fan_entry.delete(0, 'end')
@@ -1550,7 +1566,8 @@ def claim_furniture_request():
         else:
             # Display the original error message for other types of OperationalErrors
             messagebox.showerror("Error", str(e))
-     
+
+
              
             
 
@@ -1558,8 +1575,26 @@ def claim_furniture_request():
 
 def special_req():
 
+    c.execute("""CREATE TABLE IF NOT EXISTS special_request(
+              Leave_reason TEXT,
+              days TEXT,
+              informed TEXT,
+              maintenance TEXT,
+              event TEXT,
+              catagory TEXT,
+              username TEXT)""")
+    
+    conn.commit()
+
     Menu_frame.destroy()
     current_frame.destroy()
+    global Reason_text
+    global Days_entry
+    global Title_text
+    global Maintenance_text
+    global permission
+    global get_event
+    
 
     special_req_frame= Ctk.CTkFrame(master=Homepage, width=screen_width, height=(screen_height-100) )
     special_req_frame.place(relx=0, rely=0.13)
@@ -1591,8 +1626,16 @@ def special_req():
 
     No_radio_button= Ctk.CTkRadioButton(master=Leave_frame, text="No", variable=Yes_no_var, value=2)
     No_radio_button.place(relx=0.65, rely=0.75)
+    
+    def permission():
+        if Yes_no_var.get()==1:
+            return "Yes"
+        elif Yes_no_var.get()==2:
+            return "No"
+        
 
-    Submit_btn= Ctk.CTkButton(master=Leave_frame, text="Submit", fg_color="#1AD8E4", text_color="black", font=("bold",20))
+    Submit_btn= Ctk.CTkButton(master=Leave_frame, text="Submit", fg_color="#1AD8E4", text_color="black", font=("bold",20),
+                              command=request)
     Submit_btn.place(relx=0.3, rely=0.85)
 
 
@@ -1662,7 +1705,19 @@ def special_req():
     Title_text= Text(master=Event_frame, width=50, height=3, wrap=WORD, bg="#1AD8E4")
     Title_text.place(relx=0, rely=0.65)
 
-    Event_request_btn= Ctk.CTkButton(master=Event_frame, text="Request", fg_color=("#1AD8E4"), text_color="black")
+    def get_event():
+        if catagory_var.get()==1:
+            return "Education"
+        elif catagory_var.get()==2:
+            return "Mobile games"
+        elif catagory_var.get()==3:
+            return "Sports"
+        elif catagory_var.get()==3:
+            return "Other"           
+    
+
+    Event_request_btn= Ctk.CTkButton(master=Event_frame, text="Request", fg_color=("#1AD8E4"), text_color="black",
+                                     command=request)
     Event_request_btn.place(relx=0.35, rely=0.85)
 
 
@@ -1680,8 +1735,17 @@ def special_req():
     Maintenance_text= Text(master=Maintenance_frame, width=50, height=5, wrap=WORD, bg="#1AD8E4")
     Maintenance_text.place(relx=0, rely=0.3)
 
-    Maintenance_btn= Ctk.CTkButton(master=Maintenance_frame, text="Submit", fg_color="#1AD8E4", text_color="black")
+    Maintenance_btn= Ctk.CTkButton(master=Maintenance_frame, text="Submit", fg_color="#1AD8E4", text_color="black",
+                                   command=request)
     Maintenance_btn.place(relx=0.3, rely=0.7)
+
+def request():
+    c.execute("INSERT INTO special_request(Leave_reason,days,informed,maintenance,event,catagory,username) VALUES(?,?,?,?,?,?,?)",
+              (Reason_text.get("1.0","end-1c"),Days_entry.get(),permission(),Maintenance_text.get("1.0","end-1c"),get_event(),Title_text.get("1.0","end-1c"),username))
+    
+    messagebox.showinfo("Info","Your request has been submitted successfully")
+    conn.commit()
+
 
 pop_up_frame = None
 
@@ -1779,8 +1843,22 @@ def notification():
 
 def profile():
 
-    # Name_label= Ctk.CTkLabel(pop_up_frame, text=username, font=("bold",20),text_color="whtie")
-    # Name_label.place(relx=0.2, rely=0.15)
+    c.execute("SELECT email,gurdian,contact,emergency_contact FROM profile WHERE username=?",(username,))
+    cont= c.fetchone()
+
+    email,gurdian,contact,emergency=cont
+
+
+    Name_label= Ctk.CTkLabel(pop_up_frame, text=username, font=("bold",20),text_color="white")
+    Name_label.place(relx=0.3, rely=0.15)
+    Email_label=Ctk.CTkLabel(pop_up_frame,text=f"Email:  {email}",font=("bold",20),text_color="white")
+    Email_label.place(relx=0.3,rely=0.25)
+    Gurdain_label= Ctk.CTkLabel(pop_up_frame, text=f"Gurdain: {gurdian}",font=("bold",20),text_color="white")
+    Gurdain_label.place(relx=0.3,rely=0.35)
+    Contact_label= Ctk.CTkLabel(pop_up_frame, text=f"Contact: {contact}",font=("bold",20),text_color="white")
+    Contact_label.place(relx=0.3,rely=0.45)
+    Emergency_contact_label= Ctk.CTkLabel(pop_up_frame, text=f"Emergency Contact: {emergency}",font=('bold',20),text_color="white")
+    Emergency_contact_label.place(relx=0.3,rely=0.55)
     Exit_button= Ctk.CTkButton(master=pop_up_frame, text="X", command=back, width=30)
     Exit_button.place(relx=0.9, rely=0.05)
 

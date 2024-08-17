@@ -7,13 +7,11 @@ from Login import username
 import sqlite3 
 
 
-
-
-
 Homepage= Ctk.CTk()
 
 Ctk.set_appearance_mode('light')
-Homepage.geometry("{0}x{1}+0+0".format(Homepage.winfo_screenwidth(), Homepage.winfo_screenheight()))
+Homepage.geometry("{0}x{1}+0+0".format(Homepage.winfo_screenwidth(), 
+                                       Homepage.winfo_screenheight()))
 screen_width = Homepage.winfo_screenwidth()
 screen_height = Homepage.winfo_screenheight()
 
@@ -25,15 +23,6 @@ def logout_system():
     
     Homepage.destroy()
     import Dashboard
-
-
-
-
-    
-
-
-    
-    
 
 def show_frame(frame):
     global current_frame
@@ -70,13 +59,16 @@ def dashboard():
          
    
    
-     Menu_frame = Ctk.CTkFrame(master=Homepage, width=385, height=screen_height, bg_color="white", fg_color="white")
+     Menu_frame = Ctk.CTkFrame(master=Homepage, width=385, height=screen_height,
+                               bg_color="white", fg_color="white")
      Menu_frame.place(relx=0, rely=0.095)
 
-     ownername_label=Ctk.CTkLabel(master=Menu_frame,text="Giriraj Rawat",font=("bold", 25),text_color="black",fg_color="white")
+     ownername_label=Ctk.CTkLabel(master=Menu_frame,text="Giriraj Rawat",font=("bold", 25)
+                                  ,text_color="black",fg_color="white")
      ownername_label.place(relx=0.4,rely=0.1)
   
-     ownerid_label=Ctk.CTkLabel(master=Menu_frame,text="id_no:0000001",font=("bold", 20),text_color="black",fg_color="white")
+     ownerid_label=Ctk.CTkLabel(master=Menu_frame,text="id_no:0000001",
+                                font=("bold", 20),text_color="black",fg_color="white")
      ownerid_label.place(relx=0.4,rely=0.15)
   
   
@@ -101,31 +93,35 @@ def dashboard():
    
      
    
-     Appeared_btn= Ctk.CTkButton(master=Menu_frame, width=385, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
-                        text="Appeared Request", text_color="black", command=lambda: toggle_button("Appeared Request",Appeared), 
-                        image=speaker_image,compound=LEFT)
+     Appeared_btn= Ctk.CTkButton(master=Menu_frame, width=385, height=60, fg_color="#3FB5CB", 
+                                 corner_radius=10, bg_color="white", font=("bold",15),
+                        text="Appeared Request", text_color="black",
+                        command=lambda: toggle_button("Appeared Request",Appeared), image=speaker_image,compound=LEFT)
      Appeared_btn.place(relx=0, rely=0.4) 
    
-     Report_btn= Ctk.CTkButton(master=Menu_frame, width=385, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
-                        text="Reports and Analytics", text_color="black", command=lambda: toggle_button("Reports and Analytics",Report), 
-                        image=alert_image,compound=LEFT)
+     Report_btn= Ctk.CTkButton(master=Menu_frame, width=385, height=60,
+                               fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
+                        text="Reports and Analytics", text_color="black",
+                        command=lambda: toggle_button("Reports and Analytics",Report), image=alert_image,compound=LEFT)
      Report_btn.place(relx=0, rely=0.3)
    
     
    
-     Emergency_btn= Ctk.CTkButton(master=Menu_frame, width=385, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
-                        text="Emergency Contact", text_color="black", command= lambda: toggle_button("Emergency Contact",emergency), 
-                        image=emergency_image,compound=LEFT)
+     Emergency_btn= Ctk.CTkButton(master=Menu_frame, width=385, height=60, 
+                                  fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
+                        text="Emergency Contact", text_color="black", 
+                        command= lambda: toggle_button("Emergency Contact",emergency),image=emergency_image,compound=LEFT)
      Emergency_btn.place(relx=0, rely=0.5)
    
-     Setting_btn= Ctk.CTkButton(master=Menu_frame, width=385, height=60, fg_color="#3FB5CB", corner_radius=10, bg_color="white", font=("bold",15),
-                        text="Setting", text_color="black", command=lambda: toggle_button("Setting", setting), image=setting_image,compound=LEFT)
+     Setting_btn= Ctk.CTkButton(master=Menu_frame, width=385, height=60, 
+                                fg_color="#3FB5CB", corner_radius=10,
+                                bg_color="white", font=("bold",15),
+                        text="Setting", text_color="black",
+                        command=lambda: toggle_button("Setting", setting), image=setting_image,compound=LEFT)
      Setting_btn.place(relx=0, rely=0.6)
    
      menu_button=[Appeared_btn,Report_btn, Emergency_btn, Setting_btn]
      button_color={btn.cget("text"): False for btn in menu_button}
-   
-     
    
      Toggle_btn.configure(text="X", command=menu_collapse)
    
@@ -149,7 +145,8 @@ def dashboard():
    
    
    def Report():
-     Report_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100), fg_color="#EDF1F5")
+     Report_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100),
+                                fg_color="#EDF1F5")
      Report_frame.place(relx=0.25, rely=0.95)
    
      Expense_label=Ctk.CTkLabel(master=Report_frame,text="Expenses", text_color="black", font=("bold",25))
@@ -158,7 +155,8 @@ def dashboard():
      
      
      
-     expense_frame=Ctk.CTkFrame(master=Report_frame,width=(screen_width-1600),height=(100),fg_color="#3FB5CB",corner_radius=10,bg_color="white")
+     expense_frame=Ctk.CTkFrame(master=Report_frame,width=(screen_width-1600),height=(100),
+                                fg_color="#3FB5CB",corner_radius=10,bg_color="white")
      expense_frame.place(relx=0.3,rely=0.05)
      
      
@@ -173,17 +171,20 @@ def dashboard():
      
      
      
-     furniture_frame=Ctk.CTkFrame(master=Report_frame,width=(screen_width-1600),height=(100),fg_color="#3FB5CB",corner_radius=10,bg_color="white")
+     furniture_frame=Ctk.CTkFrame(master=Report_frame,width=(screen_width-1600),height=(100),
+                                  fg_color="#3FB5CB",corner_radius=10,bg_color="white")
      furniture_frame.place(relx=0.6,rely=0.05)
      
-     furniture_label=Ctk.CTkLabel(master=furniture_frame,text="Furnitures and other Repairings", text_color="white", font=("bold",20))
+     furniture_label=Ctk.CTkLabel(master=furniture_frame,text="Furnitures and other Repairings", 
+                                  text_color="white", font=("bold",20))
      furniture_label.place(relx=0.03,rely=0.0)
      
      furniture1_label=Ctk.CTkLabel(master=furniture_frame,text="NRs. 15,60,000", text_color="#FFE605", font=("bold",30))
      furniture1_label.place(relx=0.05,rely=0.5)
      
      
-     food_frame=Ctk.CTkFrame(master=Report_frame,width=(screen_width-1600),height=(100),fg_color="#3FB5CB",corner_radius=10,bg_color="white")
+     food_frame=Ctk.CTkFrame(master=Report_frame,width=(screen_width-1600),height=(100)
+                             ,fg_color="#3FB5CB",corner_radius=10,bg_color="white")
      food_frame.place(relx=0.3,rely=0.2)
      
      
@@ -194,10 +195,12 @@ def dashboard():
      food1_label.place(relx=0.05,rely=0.5)
      
      
-     payment_frame=Ctk.CTkFrame(master=Report_frame,width=(screen_width-1600),height=(100),fg_color="#3FB5CB",corner_radius=10,bg_color="white")
+     payment_frame=Ctk.CTkFrame(master=Report_frame,width=(screen_width-1600),
+                                height=(100),fg_color="#3FB5CB",corner_radius=10,bg_color="white")
      payment_frame.place(relx=0.6,rely=0.2)
      
-     pay_label=Ctk.CTkLabel(master=payment_frame,text="Outstanding Payment", text_color="white", font=("bold",20))
+     pay_label=Ctk.CTkLabel(master=payment_frame,text="Outstanding Payment",
+                            text_color="white", font=("bold",20))
      pay_label.place(relx=0.03,rely=0.0)
      
       
@@ -206,7 +209,8 @@ def dashboard():
       
      
      
-     Cont_frame= Ctk.CTkFrame(master=Report_frame, width=(screen_width-650), height=(200), fg_color="#3FB5CB", corner_radius=10, bg_color="white")
+     Cont_frame= Ctk.CTkFrame(master=Report_frame, width=(screen_width-650),
+                              height=(200), fg_color="#3FB5CB", corner_radius=10, bg_color="white")
      Cont_frame.place(relx=0.01, rely=0.4)
      
      
@@ -280,21 +284,17 @@ def dashboard():
      
      
      
-     dues_frame=Ctk.CTkFrame(master=Cont_frame,width=(screen_width-1650),height=(70),fg_color="black",corner_radius=10,bg_color="#3FB5CB")
+     dues_frame=Ctk.CTkFrame(master=Cont_frame,width=(screen_width-1650),height=(70),
+                             fg_color="black",corner_radius=10,bg_color="#3FB5CB")
      dues_frame.place(relx=0.77,rely=0.4) 
-     
-     
-     
      
      dues_label=Ctk.CTkLabel(master=dues_frame,text="Dues", text_color="white", font=("bold",15))
      dues_label.place(relx=0.05,rely=0.0)
      
      
      
-     
      dues1_label=Ctk.CTkLabel(master=dues_frame,text="NRs.", text_color="white", font=("bold",25))
      dues1_label.place(relx=0.05,rely=0.4)
-     
      
      
      
@@ -318,10 +318,12 @@ def dashboard():
 
 
    def Appeared():
-      Appeared_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100), fg_color="#EDF1F5", corner_radius=20)
+      Appeared_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100),
+                                   fg_color="#EDF1F5", corner_radius=20)
       Appeared_frame.place(relx=0.25, rely=0)
    
-      Cont_frame= Ctk.CTkFrame(master=Appeared_frame, width=(screen_width-800), height=(600), fg_color="#A7DCF5", corner_radius=10, bg_color="white")
+      Cont_frame= Ctk.CTkFrame(master=Appeared_frame, width=(screen_width-800), height=(600), 
+                               fg_color="#A7DCF5", corner_radius=10, bg_color="white")
       Cont_frame.place(relx=0.1, rely=0.2)
    
       Feature_label= Ctk.CTkLabel(master=Appeared_frame, text="Feature: We offer our honerable student to change their status such as room, bed,occupancy and so on", 
@@ -339,7 +341,8 @@ def dashboard():
    
    def emergency():
    
-      Emergency_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-250), height=(screen_height-100), fg_color="#EDF1F5")
+      Emergency_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-250), height=(screen_height-100),
+                                    fg_color="#EDF1F5")
       Emergency_frame.place(relx=0.25, rely=0)
    
    
@@ -348,13 +351,15 @@ def dashboard():
       Feature_label.place (relx=0, rely=0.05)
 
       
-      Cont_frame= Ctk.CTkFrame(master=Emergency_frame, width=(screen_width-800), height=(600), fg_color="#A7DCF5", corner_radius=10, bg_color="white")
+      Cont_frame= Ctk.CTkFrame(master=Emergency_frame, width=(screen_width-800), height=(600), 
+                               fg_color="#A7DCF5", corner_radius=10, bg_color="white")
       Cont_frame.place(relx=0.1, rely=0.2)
 
       Contact_label= Ctk.CTkLabel(master=Cont_frame, text="Contacts:", font=("bold", 25), text_color="black")
       Contact_label.place(relx=0.05, rely=0.05)
 
-      Header_label= Ctk.CTkLabel(master=Cont_frame, text="Relation \t\t\t\t Number", text_color="black", font=("bold", 25))
+      Header_label= Ctk.CTkLabel(master=Cont_frame, text="Relation \t\t\t\t Number", text_color="black",
+                                 font=("bold", 25))
       Header_label.place(relx=0.18, rely=0.20)
 
       Father_contact= Ctk.CTkLabel(master=Cont_frame, text="Canteen \t\t\t\t\t +977-98XXXXXXXX",font=("bold", 20) )
@@ -381,10 +386,12 @@ def dashboard():
       
       global Cont_frame
       global Setting_frame
-      Setting_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100), fg_color="#EDF1F5")
+      Setting_frame= Ctk.CTkFrame(master=Homepage, width=(screen_width-350), height=(screen_height-100), 
+                                  fg_color="#EDF1F5")
       Setting_frame.place(relx=0.25, rely=0)
    
-      Cont_frame= Ctk.CTkFrame(master=Setting_frame, width=(screen_width-800), height=(600), fg_color="#A7DCF5", corner_radius=10, bg_color="white")
+      Cont_frame= Ctk.CTkFrame(master=Setting_frame, width=(screen_width-800), height=(600),
+                               fg_color="#A7DCF5", corner_radius=10, bg_color="white")
       Cont_frame.place(relx=0.1, rely=0.2)
    
       Feature_label= Ctk.CTkLabel(master=Setting_frame, text="Feature: We offer our honerable student to change their status such as room, bed,\noccupancy and so on", 
@@ -394,7 +401,8 @@ def dashboard():
       Notice_label= Ctk.CTkLabel(master=Cont_frame, text="Setting:", text_color="black", font=("bold",25))
       Notice_label.place(relx=0.05, rely=0.1)
    
-      Search_entry= Ctk.CTkEntry(master=Cont_frame, placeholder_text="Search setting", width=300, height=30,text_color="black",fg_color="#EDF1F5")
+      Search_entry= Ctk.CTkEntry(master=Cont_frame, placeholder_text="Search setting", 
+                                 width=300, height=30,text_color="black",fg_color="#EDF1F5")
       Search_entry.place(relx=0.3, rely=0.2)
 
       # add `from PIL import Image` on top
@@ -408,19 +416,23 @@ def dashboard():
 
    
    
-      Profile_btn= Ctk.CTkButton(master=Cont_frame, text="Profile", width=400, height=30,fg_color="#EDF1F5", text_color="black",
+      Profile_btn= Ctk.CTkButton(master=Cont_frame, text="Profile", width=400, height=30,
+                                 fg_color="#EDF1F5", text_color="black",
                                  anchor=W, image=account_image, command=profile)
       Profile_btn.place(relx=0.15, rely=0.4)
    
-      Change_passoword_btn= Ctk.CTkButton(master=Cont_frame, text="Change Password", width=400, height=30, text_color="black",
-                                              image=notification_image, fg_color="#EDF1F5", anchor=W, command=change_pass)
+      Change_passoword_btn= Ctk.CTkButton(master=Cont_frame, text="Change Password", width=400, height=30, 
+                                          text_color="black", image=notification_image, 
+                                          fg_color="#EDF1F5", anchor=W, command=change_pass)
       Change_passoword_btn.place(relx=0.15, rely=0.5)
    
-      Update_contact_btn= Ctk.CTkButton(master=Cont_frame, text="Update contact", width=400, height=30, fg_color="#EDF1F5", text_color="black",
+      Update_contact_btn= Ctk.CTkButton(master=Cont_frame, text="Update contact", width=400, 
+                                        height=30, fg_color="#EDF1F5", text_color="black",
                                          anchor=W, image=contact_image, command=update_contact)
       Update_contact_btn.place(relx=0.15, rely=0.6)
    
-      Logout_btn= Ctk.CTkButton(master=Cont_frame, text="Log out", width=400, height=30, fg_color="#EDF1F5", text_color="black",
+      Logout_btn= Ctk.CTkButton(master=Cont_frame, text="Log out", width=400, height=30,
+                                fg_color="#EDF1F5", text_color="black",
                                         anchor=W, image=logout_image, command=logout)
       Logout_btn.place(relx=0.15, rely=0.7)
 
@@ -494,15 +506,20 @@ def dashboard():
        global Cont_frame
        global change_pass_page_frame
 
-       change_pass_page_frame= Ctk.CTkFrame(master=Cont_frame, width=screen_width, height=screen_height, fg_color="#A7DCF5")
+       change_pass_page_frame= Ctk.CTkFrame(master=Cont_frame, width=screen_width, height=screen_height,
+                                            fg_color="#A7DCF5")
        change_pass_page_frame.place(relx=0, rely=0)   
-       change_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Change Password", text_color="#CD1818", font=("bold",20))
+       change_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Change Password",
+                                       text_color="#CD1818", font=("bold",20))
        change_pass_label.place(relx=0.3, rely=0.01)   
-       Old_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Old Password:", text_color="black", font=("bold", 20))
+       Old_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Old Password:",
+                                    text_color="black", font=("bold", 20))
        Old_pass_label.place(relx=0.05, rely=0.1)   
-       new_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="New Password:", text_color="Black",font=("bold",20))
+       new_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="New Password:",
+                                    text_color="Black",font=("bold",20))
        new_pass_label.place(relx=0.05, rely=0.18)   
-       confirm_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Confirm New Password:", text_color="black", font=("bold",20))
+       confirm_pass_label= Ctk.CTkLabel(master=change_pass_page_frame, text="Confirm New Password:", 
+                                        text_color="black", font=("bold",20))
        confirm_pass_label.place(relx=0.05, rely=0.26)   
 
 
@@ -601,7 +618,8 @@ def dashboard():
        Option_frame= Ctk.CTkFrame(master=logout_frame, width=200, height=40)
        Option_frame.place(relx=0.38, rely=0.24)
 
-       Logout_btn= Ctk.CTkButton(master=Option_frame, text="Log out", fg_color="#D9D9D9", width=100, height=40,text_color="black",
+       Logout_btn= Ctk.CTkButton(master=Option_frame, text="Log out", fg_color="#D9D9D9", width=100, 
+                                 height=40,text_color="black",
                                  command=logout_system)
        Logout_btn.place(relx=0, rely=0)
 

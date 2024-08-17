@@ -11,7 +11,7 @@ app = CTk.CTk()
 CTk.set_appearance_mode("light")
 # app.geometry("1300x700")
 app.title("Griha Hostel")
-app.iconbitmap("images\\griha-high-resolution-logo.png")
+app.iconbitmap("images\\Hostel_logo.ico")
 
 app.geometry("{0}x{1}+0+0".format(app.winfo_screenwidth(), app.winfo_screenheight()))
 screen_width = app.winfo_screenwidth()

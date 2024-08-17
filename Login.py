@@ -3,6 +3,7 @@ import customtkinter
 from PIL import Image
 from tkinter import messagebox
 
+
 import sqlite3
 
 # def login_page():
@@ -104,8 +105,8 @@ def login_page():
             messagebox.showerror("Error", "Invalid username")
     
         conn.close()
-                
-
+        
+    
 
     frame = customtkinter.CTkFrame(master=login_window, width=screen_width, height=screen_height, bg_color="white", fg_color="#614BD4")
     frame.place(relx=0, rely=0)
@@ -153,6 +154,15 @@ def login_page():
     Btn_login = customtkinter.CTkButton(master=Login_frame, text="Login", width=90, fg_color="#614BD4", 
                                         command=login,text_color="white")
     Btn_login.place(relx=0.65, rely=0.6)
+    
+    
+    def forgot_password():
+        login_window.destroy()
+        import Forgotpass
+                
+    forgot_password_btn = customtkinter.CTkButton(master=Login_frame, text="Forgot Password?", width=120, fg_color="#42ABC7", 
+                                                      command=forgot_password, text_color="white")
+    forgot_password_btn.place(relx=0.05, rely=0.6)
 
     def about():
    
@@ -180,6 +190,10 @@ def login_page():
     What_btn.place(relx=0.7, rely=0.05)
 
     login_window.mainloop()
+    
+login_page()
+
+
 
 
 
