@@ -138,6 +138,12 @@ Female_button= Ctk.CTkRadioButton(master=Registerpage, text="Female", font=("bol
                                   variable=var, value=2)
 Female_button.place(relx=0.55, rely=0.55)
 
+
+
+Non_binary= Ctk.CTkRadioButton(master=Registerpage, text="Non-Binary", font=("bold",20), text_color="#323F76",
+                               variable=var, value=3)
+Non_binary.place(relx=0.67, rely=0.55)
+
 def get_gender():
   if var.get()==1:
      return "Male"
@@ -145,11 +151,7 @@ def get_gender():
      return "Female"
   else:
      return "Non-Binary"
-
-Non_binary= Ctk.CTkRadioButton(master=Registerpage, text="Non-Binary", font=("bold",20), text_color="#323F76",
-                               variable=var, value=3)
-Non_binary.place(relx=0.67, rely=0.55)
-
+  
 Security_label= Ctk.CTkLabel(master=Registerpage, text="Security question:",font=("bold",25), text_color="#323F76")
 Security_label.place(relx=0.4, rely=0.63)
 
